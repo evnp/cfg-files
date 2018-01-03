@@ -87,8 +87,8 @@ function! GetLineFoldLevel(lnum)
     let curr_indent = IndentLevel(a:lnum)
     let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
 
-    "make //region lines open a new fold
-    if curr_indent > 0 && line =~? '\v//region'
+    "make #region lines open a new fold
+    if curr_indent > 0 && line =~? '#region'
         let curr_indent -= 1
     endif
 
