@@ -10,6 +10,7 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
+set autochdir
 
 " Hide Toolbar "
 set guioptions-=T
@@ -104,6 +105,42 @@ function! GetLineFoldLevel(lnum)
 
     return curr_indent
 endfunction
+
+" Set a nicer foldtext function
+set foldtext=MyFoldText()
+function! MyFoldText()
+  let line = getline(v:foldstart)
+  if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
+    let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
+    let linenum = v:foldstart + 1
+    while linenum < v:foldend
+      let line = getline( linenum )
+      let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
+      if comment_content != ''
+        break
+      endif
+      let linenum = linenum + 1
+    endwhile
+    let sub = initial . ' ' . comment_content
+  else
+    let sub = line
+    let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
+    if startbrace == '{'
+      let line = getline(v:foldend)
+      let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
+      if endbrace == '}'
+        let n = v:foldend - v:foldstart + 1
+        let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...' . n . '...}\1', 'g')
+      endif
+    endif
+  endif
+  " replace trailing ------- with trailing space
+  return sub . "                                                                                                                                                                                                           "
+endfunction
+
+highlight FoldColumn  gui=bold    guifg=grey65     guibg=Grey90
+highlight Folded      gui=italic  guifg=Black      guibg=Grey90
+highlight LineNr      gui=NONE    guifg=grey60     guibg=Grey90
 
 " Save folds between file close/open
 autocmd BufWinLeave *.*  mkview
