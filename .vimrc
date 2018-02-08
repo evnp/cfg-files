@@ -175,6 +175,18 @@ nnoremap K zk
 nnoremap L $
 nnoremap <F9> :vsp $MYGVIMRC<CR>
 
+" Automatically go into paste mode when pasting (to avoid auto-indent)
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
 " Plugins - https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/vim-plug')
 Plug 'jelera/vim-javascript-syntax'
