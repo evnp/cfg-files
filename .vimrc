@@ -58,52 +58,71 @@ set foldmethod=expr
 set foldexpr=GetLineFoldLevel(v:lnum)
 
 function! IndentLevel(lnum)
-    return indent(a:lnum) / &shiftwidth
+  return indent(a:lnum) / &shiftwidth
 endfunction
 
 function! NextNonBlankLine(lnum)
-    let numlines = line('$')
-    let current = a:lnum + 1
+  let numlines = line('$')
+  let current = a:lnum + 1
 
-    while current <= numlines
-        if getline(current) =~? '\v\S'
-            return current
-        endif
+  while current <= numlines
+    if getline(current) =~? '\v\S'
+      return current
+    endif
 
-        let current += 1
-    endwhile
+    let current += 1
+  endwhile
 
-    return -2
+  return -2
 endfunction
 
 "modified foldexpr from http://learnvimscriptthehardway.stevelosh.com/chapters/49.html
 function! GetLineFoldLevel(lnum)
-    let line = getline(a:lnum)
+  let line = getline(a:lnum)
 
-    "set foldlevel 'undefined' for blank lines so they share foldlevel with prev or next line
-    if line =~? '\v^\s*$'
-        return '-1'
-    endif
+  "set foldlevel 'undefined' for blank lines so they share foldlevel with prev or next line
+  if line =~? '\v^\s*$'
+    return '-1'
+  endif
 
-    let curr_indent = IndentLevel(a:lnum)
-    let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+  let curr_indent = IndentLevel(a:lnum)
+  let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
 
-    "make #region lines open a new fold
-    if curr_indent > 0 && line =~? '#region'
-        let curr_indent -= 1
-    endif
+  "fold #regions
+  if curr_indent > 0 && line =~? '#region'
+    let curr_indent -= 1
+  endif
 
-    "include closing bracket lines in the previous fold
-    if line =~? '\v^\s*[\}\]\)]'
-        let curr_indent += 1
-    endif
+  "fold block comments
+  let has_comment_start = line =~? '/\*'
+  let has_comment_end = line =~? '\*/'
+  "opening comment line /*...
+  if has_comment_start && !has_comment_end
+    let curr_indent += 1
+    return '>' . curr_indent
+  endif
+  "closing comment line ...*/
+  if !has_comment_start && has_comment_end
+    let curr_indent += 1
+    return '<' . curr_indent
+  endif
+  "intermediate comment line *...
+  if line =~? '^\s*\*'
+    return '-1'
+  endif
 
-    "include block opening lines (i.e. function signature, if/for/while declaration) in the following fold
-    if next_indent > curr_indent
-        return '>' . next_indent
-    endif
+  "include closing bracket lines in the previous fold
+  if line =~? '\v^\s*[\}\]\)]'
+    let curr_indent += 1
+    return '<' . curr_indent
+  endif
 
-    return curr_indent
+  "include block opening lines (i.e. function signature, if/for/while declaration) in the following fold
+  if next_indent > curr_indent
+    return '>' . next_indent
+  endif
+
+  return curr_indent
 endfunction
 
 " Set a nicer foldtext function
@@ -112,30 +131,22 @@ function! MyFoldText()
   let line = getline(v:foldstart)
   if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
     let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
-    let linenum = v:foldstart + 1
-    while linenum < v:foldend
-      let line = getline( linenum )
-      let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
-      if comment_content != ''
-        break
-      endif
-      let linenum = linenum + 1
-    endwhile
-    let sub = initial . ' ' . comment_content
+    let n = v:foldend - v:foldstart + 1
+    let sub = initial . '...' . n . '...' . '*/'
   else
     let sub = line
-    let startbrace = substitute( line, '^.*{[ \t]*$', '{', 'g')
+    let startbrace = substitute(line, '^.*{[ \t]*$', '{', 'g')
     if startbrace == '{'
       let line = getline(v:foldend)
-      let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
+      let endbrace = substitute(line, '^[ \t]*}\(.*\)$', '}', 'g')
       if endbrace == '}'
         let n = v:foldend - v:foldstart + 1
-        let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', '...' . n . '...}\1', 'g')
+        let sub = sub.substitute(line, '^[ \t]*}\(.*\)$', '...' . n . '...}\1', 'g')
       endif
     endif
   endif
   " replace trailing ------- with trailing space
-  return sub . "                                                                                                                                                                                                           "
+  return sub . repeat(' ', 10000)
 endfunction
 
 highlight FoldColumn  gui=bold    guifg=grey65     guibg=Grey90
