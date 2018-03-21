@@ -114,7 +114,6 @@ function! GetLineFoldLevel(lnum)
   "include closing bracket lines in the previous fold
   if line =~? '\v^\s*[\}\]\)]'
     let curr_indent += 1
-    return '<' . curr_indent
   endif
 
   "include block opening lines (i.e. function signature, if/for/while declaration) in the following fold
