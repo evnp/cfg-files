@@ -1,0 +1,4 @@
+#!/bin/bash
+text=$($1 2> /dev/null | grep -E "(passing|failing)")
+title=$([[ $text = *"failing"* ]] && echo "failed" || echo "passed")
+osascript -e "display notification \"$text\" with title \"Tests $title\""
