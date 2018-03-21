@@ -1,4 +1,15 @@
 #!/bin/bash
-text=$($1 2> /dev/null | grep -E "(passing|failing)")
-title=$([[ $text = *"failing"* ]] && echo "failed" || echo "passed")
-osascript -e "display notification \"$text\" with title \"Tests $title\""
+# only look at last 20 lines so we avoid misinterpreting lines that contain "pass" or "fail"
+output="$($1 2> /dev/null | tail -20)"
+# try and pull out the last lines that contain "pass" or "fail"
+# need to wrap in quotes throughout here so that newlines are not swapped out
+# due to field splitting during command substitution
+pass="$(echo "$output" | grep "pass" | tail -1)"
+fail="$(echo "$output" | grep "fail" | tail -1)"
+# text is pass and fail lines (or just pass if they are the same)
+text=$([[ $pass = $fail ]] && echo $pass || echo -e "$pass\n$fail")
+title=$([[ -z $fail ]] && echo "passed" || echo "failed")
+title="Tests $title"
+echo $title
+echo $text
+osascript -e "display notification \"$text\" with title \"$title\""
