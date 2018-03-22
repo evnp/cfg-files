@@ -197,6 +197,9 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
+" suppress vim-go version warning
+let g:go_version_warning = 0
+
 " Plugins - https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/vim-plug')
 Plug 'jelera/vim-javascript-syntax'
@@ -208,4 +211,5 @@ Plug 'tpope/vim-abolish'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
+Plug 'fatih/vim-go'
 call plug#end()
