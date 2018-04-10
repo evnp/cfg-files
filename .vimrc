@@ -46,6 +46,7 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+nnoremap \ :noh<CR>
 
 " Folding
 nnoremap - zm
