@@ -32,6 +32,11 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # set show-all-if-ambiguous on
 # set completion-ignore-case on
 
+# Make fzf respect .gitignore
+export FZF_DEFAULT_COMMAND='fd --type f'
+
+# MESS BELOW - please organize/cleanup
+
 # Shelytics
 # export SHELYTICS_LOCATION=~/Dropbox/Projects/shelytics
 # export SHELYTICS_DATABASE=~/shelytics/shelytics.db

@@ -10,7 +10,9 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
-set autochdir
+
+" Save automatically on esc from insert mode
+inoremap <Esc> <Esc>:w<CR>
 
 " Hide Toolbar "
 set guioptions-=T
@@ -203,14 +205,16 @@ let g:go_version_warning = 0
 
 " Plugins - https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/vim-plug')
-Plug 'jelera/vim-javascript-syntax'
-Plug 'wavded/vim-stylus'
-Plug 'digitaltoad/vim-pug'
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'airblade/vim-rooter'
+Plug 'avakhov/vim-yaml'
 Plug 'christoomey/vim-sort-motion'
-Plug 'tpope/vim-abolish'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'digitaltoad/vim-pug'
+Plug 'fatih/vim-go'
+Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
-Plug 'fatih/vim-go'
+Plug 'tpope/vim-abolish'
+Plug 'wavded/vim-stylus'
 call plug#end()
