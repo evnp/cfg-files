@@ -11,7 +11,7 @@ export LANG=en_US.UTF-8
 
 # Git branch in prompt.
 parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
 
 # Prompt
@@ -43,6 +43,8 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 # export SHELYTICS_MP_TOKEN=bdb558ed12c58ba003ed7854792fb1e1
 # source $SHELYTICS_LOCATION/shelytics.bash
 
+alias python='python3'
+alias pip='pip3'
 alias gvim='mvim'
 alias la='ls -a'
 alias ..='cd ..'

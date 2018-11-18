@@ -12,7 +12,7 @@ set term=xterm-256color
 set termencoding=utf-8
 
 " Save automatically on esc from insert mode
-inoremap <Esc> <Esc>:w<CR>
+" inoremap <Esc> <Esc>:w<CR>
 
 " Hide Toolbar "
 set guioptions-=T
@@ -131,19 +131,27 @@ endfunction
 set foldtext=MyFoldText()
 function! MyFoldText()
   let line = getline(v:foldstart)
-  if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
-    let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
-    let n = v:foldend - v:foldstart + 1
-    let sub = initial . '...' . n . '...' . '*/'
+  let text = join(getline(v:foldstart, v:foldend))
+  let numLines = v:foldend - v:foldstart + 1
+  let numChars = strlen(substitute(text, '\v\s+', '', 'g')) " number of non-whitespace chars
+
+  " Fold text for /* ... */ -style block comments
+  if match(line, '\v^\s*(/\*)[*/]*\s*$') == 0
+    let leader = substitute(text, '\v^(\s*)([/*]*).*$', '\1\2', '')         " get initial space and opening comment characters
+    let truncatedText = substitute(text, '\v^(.{,40})(\w*).*$', '\1\2', '') " truncate text to 40 characters, breaking at end of word
+    let cleanedText = substitute(truncatedText, '\v(\s|/|*)+', ' ', 'g')    " replace whitespace and /* characters with a single space
+    let sub = leader . cleanedText . '... ' . numLines . 'l ' . numChars . 'c */'
+
+  " Fold text for codeblocks enclosed in ({[]}) brackets
   else
     let sub = line
-    let startbrace = substitute(line, '^.*{[ \t]*$', '{', 'g')
+    let startbrace = substitute(line, '\v^.*\{\s*$', '{', 'g')
     if startbrace == '{'
       let line = getline(v:foldend)
-      let endbrace = substitute(line, '^[ \t]*}\(.*\)$', '}', 'g')
+      let endbrace = substitute(line, '\v^\s*\}(.*)$', '}', 'g')
       if endbrace == '}'
         let n = v:foldend - v:foldstart + 1
-        let sub = sub.substitute(line, '^[ \t]*}\(.*\)$', '...' . n . '...}\1', 'g')
+        let sub = sub.substitute(line, '\v^\s*\}(.*)$', '... ' . numLines . 'l ' .numChars . 'c ...}\1', 'g')
       endif
     endif
   endif
