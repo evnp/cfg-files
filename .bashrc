@@ -9,14 +9,33 @@ export TERM="xterm-256color"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# Git branch in prompt.
-parse_git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
-}
+# Colors
+
+export RED="\[\033[0;31m\]"
+export RED_BOLD="\[\033[01;31m\]"
+export BLUE="\[\033[0;34m\]"
+export CYAN='\[\e[0;36m\]'
+export PURPLE='\[\e[0;35m\]'
+export GREEN="\[\033[0;32m\]"
+export YELLOW="\[\033[0;33m\]"
+export BLACK="\[\033[0;38m\]"
+export NO_COLOUR="\[\033[0m\]"
+export RESET='\[\e[0m\]'
 
 # Prompt
-export PS1="\A\e[39m\[\033[32m\]\$(parse_git_branch)\[\033[00m\] \W \[\033[1;34m\]●\[\033[0m\] "
-PROMPT_COMMAND='echo -ne "\033]0;${PWD}\007"'
+
+PROMPT_COMMAND=prompt_command
+prompt_command() {
+  local DOT_COLOR=$BLUE
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    local DOT_COLOR=$RED_BOLD
+  fi
+  export PS1="\A${GREEN}\$(git_branch)${RESET} \W ${DOT_COLOR}●${RESET} "
+  echo -ne "\033]0;${PWD}\007"
+}
+git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+}
 
 # History Management
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
