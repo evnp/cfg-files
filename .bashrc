@@ -12,8 +12,9 @@ export LANG=en_US.UTF-8
 # Colors
 
 export RED="\[\033[0;31m\]"
-export RED_BOLD="\[\033[01;31m\]"
+export RED_BOLD="\[\033[1;31m\]"
 export BLUE="\[\033[0;34m\]"
+export BLUE_BOLD="\[\033[1;34m\]"
 export CYAN='\[\e[0;36m\]'
 export PURPLE='\[\e[0;35m\]'
 export GREEN="\[\033[0;32m\]"
@@ -26,7 +27,7 @@ export RESET='\[\e[0m\]'
 
 PROMPT_COMMAND=prompt_command
 prompt_command() {
-  local DOT_COLOR=$BLUE
+  local DOT_COLOR=$BLUE_BOLD
   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     local DOT_COLOR=$RED_BOLD
   fi
