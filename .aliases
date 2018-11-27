@@ -5,6 +5,11 @@ alias st='ssh -A dev -t tmux new-session -AD -s'
 alias mt='mosh dev -- tmux new-session -AD -s'
 alias sync-insights='sudo lsyncd /etc/lsyncd/insights.conf.lua'
 alias sync-dashboard='sudo lsyncd /etc/lsyncd/dashboard.conf.lua'
+vs() {
+  local path=scp://dev//home/evnp${PWD/\/Users\/evanpurcer/}/$1
+  echo "Opening $path..."
+  vim $path
+}
 
 # temp
 alias sa='ssh dev -t "cd ~/analytics ; bash"'
@@ -15,21 +20,21 @@ alias si='ssh dev -t "cd ~/platform-apps/insights/src ; bash"'
 alias gs='git status'
 alias gst='git stash'
 alias gsl='git stash list'
-function gss {
+gss() {
   if [[ $1 ]]; then
     git stash show -p stash@{$1}
   else
     git stash show -p
   fi
 }
-function gsa {
+gsa() {
   if [[ $1 ]]; then
     git stash apply stash@{$1}
   else
     git stash apply
   fi
 }
-function gsp {
+gsp() {
   if [[ $1 ]]; then
     git stash pop stash@{$1}
   else
