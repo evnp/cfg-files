@@ -1,4 +1,5 @@
 source ~/.aliases
+source ~/.bash_mixpanel
 
 export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
 export PATH=$PATH:/opt/node/bin # Add Node to PATH
@@ -60,8 +61,6 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # export SHELYTICS_MP_TOKEN=bdb558ed12c58ba003ed7854792fb1e1
 # source $SHELYTICS_LOCATION/shelytics.bash
 
-alias python='python3'
-alias pip='pip3'
 alias gvim='mvim'
 alias la='ls -a'
 alias ..='cd ..'
