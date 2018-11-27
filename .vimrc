@@ -3,6 +3,7 @@ set background=dark
 colorscheme hybrid
 set mouse=a
 
+set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
 set guifont=Monaco:h11
 let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
@@ -27,6 +28,10 @@ autocmd! bufwritepost .vimrc source %
 
 " Strip trailing whitespace from files on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+" Flake8 - Python linting
+autocmd BufWritePost *.py call Flake8()
+let g:flake8_show_in_file=1
 
 " Disable "safe write" to ensure webpack file watching works
 set backupcopy=yes
@@ -113,4 +118,5 @@ Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-abolish'
 Plug 'wavded/vim-stylus'
 Plug 'evnp/fodlgang'
+Plug 'nvie/vim-flake8'
 call plug#end()
