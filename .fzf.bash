@@ -12,7 +12,7 @@ fi
 # ------------
 source "$HOME/.fzf/shell/key-bindings.bash"
 
-_fzf_find_files="rg --files"
+_fzf_find_files="fd --type f"
 _fzf_find_directories="fd --type d --follow --exclude '.git' ."
 
 # fzf+ripgrep - fast & respects .gitignore
