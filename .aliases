@@ -16,6 +16,9 @@ alias sa='ssh dev -t "cd ~/analytics ; bash"'
 alias sb='ssh dev -t "cd ~/analytics/billing ; bash"'
 alias si='ssh dev -t "cd ~/platform-apps/insights/src ; bash"'
 
+# misc
+alias clean-swp="find -name '*.sw*' | xargs rm"
+
 # Git aliases
 alias gs='git status'
 alias gst='git stash'
