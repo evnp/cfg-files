@@ -85,7 +85,7 @@ _get_fzf_line() {
 :FZFCd() {
   local out=$(_get_fzf_output "$1" "files")
   local file=$(_get_fzf_target "$out")
-  [ -n "$file" ] && cd $(dirname "$file")
+  [ -n "$file" ] && cd $(dirname "$file") && clear
 }
 
 # Run fzf on directory list and navigate to directory on enter
@@ -93,7 +93,7 @@ _get_fzf_line() {
 :FZFDirCd() {
   local out=$(_get_fzf_output "$1" "dirs")
   local dir=$(_get_fzf_target "$out")
-  [ -n "$dir" ] && cd "$dir"
+  [ -n "$dir" ] && cd "$dir" && clear
 }
 
 # Grep file contents and navigate to directory containing matching file on enter
@@ -101,5 +101,5 @@ _get_fzf_line() {
 :AgCd() {
   local out=$(_get_fzf_output "$1" "text")
   local file=$(_get_fzf_target "$out")
-  [ -n "$file" ] && cd $(dirname "$file")
+  [ -n "$file" ] && cd $(dirname "$file") && clear
 }
