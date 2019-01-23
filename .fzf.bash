@@ -53,6 +53,11 @@ _get_fzf_line() {
   fi
 }
 
+# Open all files in cwd an a four-way split
+vimdir() {
+  vim * -c 'sp|vsp' -c 'wincmd j' -c 'vsp|bnext|bnext' -c 'wincmd l' -c 'bnext|bnext|bnext' -c 'wincmd k' -c 'bnext'
+}
+
 # Run fzf and open file in default editor on enter
 # create iterm2 hotkey mapped to [Send text: ":FZF \n"]
 # note: named ":FZF" so that same hotkey can activate fzf in vim
@@ -67,7 +72,7 @@ _get_fzf_line() {
 :FZFDir() {
   local out=$(_get_fzf_output "$1" "dirs")
   local dir=$(_get_fzf_target "$out")
-  [ -n "$dir" ] && cd "$dir" && vim *
+  [ -n "$dir" ] && cd "$dir" && vimdir
 }
 
 # Grep file contents and open file at matching line on enter
