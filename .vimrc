@@ -59,11 +59,11 @@ highlight FoldColumn  gui=bold    guifg=grey65     guibg=Grey90
 highlight Folded      gui=italic  guifg=Black      guibg=Grey90
 highlight LineNr      gui=NONE    guifg=grey60     guibg=Grey90
 
-" Split navigation
-map <C-H> <C-W>h<C-W>
-map <C-L> <C-W>l<C-W>
-" map <C-J> <C-W>j<C-W>_
-" map <C-K> <C-W>k<C-W>_
+" Split resizing
+nnoremap = <C-W>=
+nnoremap > <C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+
+nnoremap < <C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-<C-W>-
+
 set wmh=0
 
 " Fuzzy file/buffer search
@@ -72,8 +72,8 @@ nnoremap <C-B> :Buffers<CR>
 nnoremap <C-A> :Ag<CR>
 
 "Buffer switching
-nnoremap “ :bprev<CR>
-nnoremap ‘ :bnext<CR>
+nnoremap " :bprev<CR>
+nnoremap ' :bnext<CR>
 
 "--------------
 
