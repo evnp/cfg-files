@@ -18,6 +18,9 @@ alias si='ssh dev -t "cd ~/platform-apps/insights/src ; bash"'
 
 # misc
 alias clean-swp="find -name '*.sw*' | xargs rm"
+gifify () {
+  ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $2
+}
 
 # Git aliases
 alias gs='git status'
