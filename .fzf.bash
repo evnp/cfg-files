@@ -108,3 +108,11 @@ vimdir() {
   local file=$(_get_fzf_target "$out")
   [ -n "$file" ] && cd $(dirname "$file") && clear
 }
+
+# alias since iterm2 "send-text" sometimes omits leading colon
+alias FZF=":FZF"
+alias FZFDir=":FZFDir"
+alias Ag=":Ag"
+alias FZFCd=":FZFCd"
+alias FZFDirCd=":FZFDirCd"
+alias AgCd=":AgCd"
