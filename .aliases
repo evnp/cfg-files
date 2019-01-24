@@ -11,6 +11,9 @@ vs() {
   vim $path
 }
 
+# make ack respect .gitignore (with better fd)
+alias ak="fd -tf | ack -x"
+
 # temp
 alias sa='ssh dev -t "cd ~/analytics ; bash"'
 alias sb='ssh dev -t "cd ~/analytics/billing ; bash"'
