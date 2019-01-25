@@ -53,9 +53,22 @@ _get_fzf_line() {
   fi
 }
 
-# Open all files in cwd an a four-way split
+# Open all files in cwd an a four-way split (or fewer splits if there are fewer files in dir)
 vimdir() {
-  vim * -c 'sp|vsp' -c 'wincmd j' -c 'vsp|bnext|bnext' -c 'wincmd l' -c 'bnext|bnext|bnext' -c 'wincmd k' -c 'bnext'
+  shopt -s nullglob
+  local files=(*)
+  local numfiles=${#files[@]}
+  if [[ "$numfiles" == 0 ]]; then
+    echo 'Directory is empty'
+  elif [[ "$numfiles" == 1 ]]; then
+    vim *
+  elif [[ "$numfiles" == 2 ]]; then
+    vim * -c 'vsp|winc l|bn|winc h'
+  elif [[ "$numfiles" == 3 ]]; then
+    vim * -c 'vsp|bn|winc l|sp|winc j|bn|bn|winc h'
+  else
+    vim * -c 'sp|vsp|bn|winc j|vsp|bn|bn|winc l|bn|bn|bn|winc h|winc k'
+  fi
 }
 
 # Run fzf and open file in default editor on enter
