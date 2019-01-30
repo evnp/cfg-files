@@ -105,6 +105,9 @@ endfunction
 " suppress vim-go version warning
 let g:go_version_warning = 0
 
+" superquit
+command Q wqa!
+
 " Plugins - https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/vim-plug')
 Plug 'airblade/vim-rooter'
@@ -114,10 +117,10 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'digitaltoad/vim-pug'
 Plug 'fatih/vim-go'
 Plug 'jelera/vim-javascript-syntax'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-unimpaired'
 Plug 'wavded/vim-stylus'
 Plug 'evnp/fodlgang'
 Plug 'nvie/vim-flake8'
