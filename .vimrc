@@ -109,6 +109,7 @@ let g:go_version_warning = 0
 command Q wqa!
 
 " Plugins - https://github.com/junegunn/vim-plug
+set rtp+=~/.fzf " required for fzf.vim to work
 call plug#begin('~/.vim/vim-plug')
 Plug 'airblade/vim-rooter'
 Plug 'avakhov/vim-yaml'
