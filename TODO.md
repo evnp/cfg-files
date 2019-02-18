@@ -1,2 +1,2 @@
-- make vim open with all folds expanded
-- make vim autosave so we can turn of annoying swp file system
+- [x] make vim open with all folds expanded
+- [x] make vim autosave so we can turn of annoying swp file system
