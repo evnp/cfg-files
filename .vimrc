@@ -90,6 +90,16 @@ nnoremap K zk
 nnoremap L $
 nnoremap <F9> :vsp $MYGVIMRC<CR>
 
+" Autosave
+let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+let g:auto_save_silent = 1  " do not display the auto-save notification
+set noswapfile  " disable swp file creation since we're auto-saving
+set nobackup
+
+" Folding
+set foldlevelstart=2
+
 " Automatically go into paste mode when pasting (to avoid auto-indent)
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
@@ -116,13 +126,14 @@ Plug 'avakhov/vim-yaml'
 Plug 'christoomey/vim-sort-motion'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'digitaltoad/vim-pug'
+Plug 'evnp/fodlgang'
 Plug 'fatih/vim-go'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
+Plug 'nvie/vim-flake8'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
+Plug 'vim-scripts/vim-auto-save'
 Plug 'wavded/vim-stylus'
-Plug 'evnp/fodlgang'
-Plug 'nvie/vim-flake8'
 call plug#end()
