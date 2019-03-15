@@ -175,7 +175,7 @@ function start_agent {
     ssh-agent > "$SSH_ENV"
     chmod 600 "$SSH_ENV"
     . "$SSH_ENV" > /dev/null
-    ssh-add
+    ssh-add -K
 }
 if [ -f "$SSH_ENV" ]; then
     . "$SSH_ENV" > /dev/null
