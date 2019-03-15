@@ -121,6 +121,7 @@ command Q wqa!
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
 call plug#begin('~/.vim/vim-plug')
+Plug 'Quramy/tsuquyomi'
 Plug 'airblade/vim-rooter'
 Plug 'avakhov/vim-yaml'
 Plug 'christoomey/vim-sort-motion'
@@ -130,6 +131,7 @@ Plug 'evnp/fodlgang'
 Plug 'fatih/vim-go'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf.vim'
+Plug 'leafgarland/typescript-vim'
 Plug 'mileszs/ack.vim'
 Plug 'nvie/vim-flake8'
 Plug 'tpope/vim-abolish'
