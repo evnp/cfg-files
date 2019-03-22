@@ -32,6 +32,9 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Flake8 - Python linting
 autocmd BufWritePost *.py call Flake8()
 let g:flake8_show_in_file=1
+let g:flake8_show_in_gutter=0
+let g:flake8_show_quickfix=0
+nmap 8 <Plug>window:quickfix:toggle
 
 " Disable "safe write" to ensure webpack file watching works
 set backupcopy=yes
@@ -127,6 +130,7 @@ Plug 'avakhov/vim-yaml'
 Plug 'christoomey/vim-sort-motion'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'digitaltoad/vim-pug'
+Plug 'drmingdrmer/vim-toggle-quickfix'
 Plug 'evnp/fodlgang'
 Plug 'fatih/vim-go'
 Plug 'jelera/vim-javascript-syntax'
