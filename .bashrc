@@ -195,10 +195,4 @@ if [ -f '/home/evnp/google-cloud-sdk/path.bash.inc' ]; then source '/home/evnp/g
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/evnp/google-cloud-sdk/completion.bash.inc' ]; then source '/home/evnp/google-cloud-sdk/completion.bash.inc'; fi
 
-function replace {
-  echo $1
-  echo $2
-  ack -f | xargs sed -i $1
-}
-
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
