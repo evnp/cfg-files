@@ -74,11 +74,15 @@ set wmh=0
 " Fuzzy file/buffer search
 nnoremap <C-F> :Files<CR>
 nnoremap <C-B> :Buffers<CR>
-nnoremap <C-A> :Ag<CR>
+nnoremap <C-G> :Ag<CR>
 
-"Buffer switching
-nnoremap " :bprev<CR>
-nnoremap ' :bnext<CR>
+" Buffer switching
+nnoremap ] :bprev<CR>
+nnoremap [ :bnext<CR>
+
+" Tab switching
+nnoremap } :tabnext<CR>
+nnoremap { :tabprev<CR>
 
 "--------------
 
