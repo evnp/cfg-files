@@ -1,2 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# usage: run-watch <dir> run-tests "<cmd>"
+#   e.g: run-watch ./src run-tests "npm run tests"
 fswatch -0 -o -r $1 | xargs -0 -n 1 $2 "$3"
