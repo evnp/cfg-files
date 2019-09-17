@@ -2,19 +2,19 @@
 ( sleep 1800 ; bw lock ) & disown
 
 bwfzf() {
-  local action
-  local field
-  local items
-  local key
+  local bwItems
+  local currentTime
+  local keyPressed
+  local lastAction
   local loginOrUnlock
-  local now
+  local nextField
 
   # lock bitwarden every 10 minutes - revoke all existing sessions
-  now="$(date +%s)"
-  if [[ -n "${BW_EXPIRE}" ]] && (( now > BW_EXPIRE )); then
+  currentTime="$(date +%s)"
+  if [[ -n "${BW_SESSION_EXPIRY}" ]] && (( currentTime > BW_SESSION_EXPIRY )); then
     bw lock
   fi
-  export BW_EXPIRE="$(( now + 600 ))"
+  export BW_SESSION_EXPIRY="$(( currentTime + 600 ))"
 
   # set BW_SESSION env var from keychain if necessary
   if [[ -z "${BW_SESSION}" ]]; then
@@ -25,10 +25,10 @@ bwfzf() {
   fi
 
   # attempt to fetch items list
-  items="$(bw list items)"
-  if [[ "${items}" == *"not logged in"* ]]; then
+  bwItems="$(bw list items)"
+  if [[ "${bwItems}" == *"not logged in"* ]]; then
     loginOrUnlock="login"
-  elif [[ "${items}" == *"locked"* ]]; then
+  elif [[ "${bwItems}" == *"locked"* ]]; then
     loginOrUnlock="unlock"
   fi
 
@@ -40,13 +40,13 @@ bwfzf() {
     # -U : update if already exists
 
     # re-fetch items list
-    items="$(bw list items)"
+    bwItems="$(bw list items)"
   fi
 
   # invoke fzf on items list
-  item="$(
+  bwItem="$(
     bw get item "$(
-      echo "${items}" \
+      echo "${bwItems}" \
       | jq -r '.[] | "\(.name) · \(.login.username) \(.id)" ' \
       | fzf-tmux --nth 1..-2 --with-nth 1..-2 \
       | awk '{print $NF}' \
@@ -58,24 +58,24 @@ bwfzf() {
   while true; do
 
     # p key - print full entry
-    if [[ "${key}" == "p" ]]; then
-      action=""
-      echo "${item//$(echo "${item}" | jq -r '.login.password')/*****}" | jq .
+    if [[ "${keyPressed}" == "p" ]]; then
+      lastAction=""
+      echo "${bwItem//$(echo "${bwItem}" | jq -r '.login.password')/*****}" | jq .
 
     # enter key - copy password, username, uri, etc.
-    elif [[ -z "${key}" ]]; then
-      if [[ "${field}" == "username" ]]; then
-        echo "${item}" | jq -r '.login.username' | secure-pbcopy
-        action="Username copied!"
-        field="uri"
-      elif [[ "${field}" == "uri" ]]; then
-        echo "${item}" | jq -r '.login.uri' | secure-pbcopy
-        action="URI copied!"
-        field="password"
+    elif [[ -z "${keyPressed}" ]]; then
+      if [[ "${nextField}" == "username" ]]; then
+        echo "${bwItem}" | jq -r '.login.username' | secure-pbcopy
+        lastAction="Username copied!"
+        nextField="uri"
+      elif [[ "${nextField}" == "uri" ]]; then
+        echo "${bwItem}" | jq -r '.login.uri' | secure-pbcopy
+        lastAction="URI copied!"
+        nextField="password"
       else
-        echo "${item}" | jq -r '.login.password' | secure-pbcopy
-        action="Password copied!"
-        field="username"
+        echo "${bwItem}" | jq -r '.login.password' | secure-pbcopy
+        lastAction="Password copied!"
+        nextField="username"
       fi
 
     # any other key - exit
@@ -84,11 +84,11 @@ bwfzf() {
     fi
 
     read -rsn1 -p "
-${action}
-  enter -> copy ${field}
+${lastAction}
+  enter -> copy ${nextField}
   p key -> print full entry (password redacted)
   other -> exit
-" key
+" keyPressed
   done
 }
 
