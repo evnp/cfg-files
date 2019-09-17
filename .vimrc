@@ -123,7 +123,15 @@ endfunction
 let g:go_version_warning = 0
 
 " superquit
-command Q wqa!
+command! Q wqa!
+
+function! Focus()
+  Goyo
+  colo seoul256
+  highlight StatusLineNC ctermfg=white
+  set scrolloff=999
+endfunction
+command! Focus :call Focus()
 
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
@@ -139,6 +147,8 @@ Plug 'evnp/fodlgang'
 Plug 'fatih/vim-go'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/seoul256.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'mileszs/ack.vim'
 Plug 'nvie/vim-flake8'
