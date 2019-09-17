@@ -2,11 +2,15 @@
 ( sleep 1800 ; bw lock ) & disown
 
 bwfzf() {
+  local action
+  local field
   local items
+  local key
   local loginOrUnlock
+  local now
 
   # lock bitwarden every 10 minutes - revoke all existing sessions
-  local now="$(date +%s)"
+  now="$(date +%s)"
   if [[ -n "${BW_EXPIRE}" ]] && (( now > BW_EXPIRE )); then
     bw lock
   fi
@@ -39,15 +43,53 @@ bwfzf() {
     items="$(bw list items)"
   fi
 
-  # invoke fzf on items list, then secure-pbcopy password from selected item
-  bw get item "$(
-    echo "${items}" \
-    | jq -r '.[] | "\(.name) · \(.login.username) \(.id)" ' \
-    | fzf-tmux --nth 1..-2 --with-nth 1..-2 \
-    | awk '{print $NF}' \
-  )" \
-  | jq -r '.login.password' \
-  | secure-pbcopy
+  # invoke fzf on items list
+  item="$(
+    bw get item "$(
+      echo "${items}" \
+      | jq -r '.[] | "\(.name) · \(.login.username) \(.id)" ' \
+      | fzf-tmux --nth 1..-2 --with-nth 1..-2 \
+      | awk '{print $NF}' \
+    )"
+  )"
+
+  # perform an action (e.g. copy password to clipboard) then ask the user
+  # whether to perform another action or exit
+  while true; do
+
+    # p key - print full entry
+    if [[ "${key}" == "p" ]]; then
+      action=""
+      echo "${item//$(echo "${item}" | jq -r '.login.password')/*****}" | jq .
+
+    # enter key - copy password, username, uri, etc.
+    elif [[ -z "${key}" ]]; then
+      if [[ "${field}" == "username" ]]; then
+        echo "${item}" | jq -r '.login.username' | secure-pbcopy
+        action="Username copied!"
+        field="uri"
+      elif [[ "${field}" == "uri" ]]; then
+        echo "${item}" | jq -r '.login.uri' | secure-pbcopy
+        action="URI copied!"
+        field="password"
+      else
+        echo "${item}" | jq -r '.login.password' | secure-pbcopy
+        action="Password copied!"
+        field="username"
+      fi
+
+    # any other key - exit
+    else
+      break
+    fi
+
+    read -rsn1 -p "
+${action}
+  enter -> copy ${field}
+  p key -> print full entry (password redacted)
+  other -> exit
+" key
+  done
 }
 
 bwgenerate() {
