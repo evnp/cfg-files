@@ -24,6 +24,9 @@ export BLACK="\[\033[0;38m\]"
 export NO_COLOUR="\[\033[0m\]"
 export RESET='\[\e[0m\]'
 
+# open man pages in vim
+export MANPAGER="col -b | vim -c 'set ft=man ts=8 nomod nolist nonu' -c 'nnoremap i <nop>' -c 'normal zR' -"
+
 # Prompt
 
 PROMPT_COMMAND=prompt_command
@@ -197,3 +200,5 @@ if [ -f '/home/evnp/google-cloud-sdk/completion.bash.inc' ]; then source '/home/
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.bitwarden.bash ] && source ~/.bitwarden.bash
+
+export BASH_SILENCE_DEPRECATION_WARNING=1

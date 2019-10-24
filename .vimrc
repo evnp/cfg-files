@@ -45,11 +45,23 @@ set number
 
 " Tabs
 set list
-set listchars=tab:>-,trail:.,extends:>,precedes:<
+set listchars=tab:·\ ,trail:·,extends:>,precedes:<
 set shiftwidth=2
-set sw=2 sts=2 ts=2 et
+set tabstop=2
+set softtabstop=2
 set autoindent
-set expandtab
+
+function! Spaces()
+  set expandtab
+  %retab!
+endfunction
+command! Spaces :call Spaces()
+
+function! Tabs()
+  set noexpandtab
+  %retab!
+endfunction
+command! Tabs :call Tabs()
 
 " Search
 set incsearch
@@ -86,7 +98,6 @@ nnoremap { :tabprev<CR>
 
 "--------------
 
-inoremap <Tab> <Space><Space>
 inoremap <S-Backspace> <Backspace><Backspace>
 
 nnoremap t o<Esc>
@@ -107,27 +118,23 @@ set nobackup
 " Folding
 set foldlevelstart=2
 
-" Automatically go into paste mode when pasting (to avoid auto-indent)
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-
 " suppress vim-go version warning
 let g:go_version_warning = 0
 
 " superquit
 command! Q wqa!
 
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register
+" without yanking it
+vnoremap <leader>p "_dP
+
 function! Focus()
   Goyo
-  colo seoul256
+  colo seoul256-light
   highlight StatusLineNC ctermfg=white
   set scrolloff=999
 endfunction
@@ -136,6 +143,7 @@ command! Focus :call Focus()
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
 call plug#begin('~/.vim/vim-plug')
+Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Quramy/tsuquyomi'
 Plug 'airblade/vim-rooter'
 Plug 'avakhov/vim-yaml'
@@ -156,4 +164,6 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/vim-auto-save'
 Plug 'wavded/vim-stylus'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
 call plug#end()
