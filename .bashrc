@@ -173,23 +173,17 @@ function b64 { echo "$1" | base64 --decode; }
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # Make sure ssh agent is always running
-SSH_ENV="$HOME/.ssh/environment"
-function start_agent {
-    ssh-agent > "$SSH_ENV"
-    chmod 600 "$SSH_ENV"
-    . "$SSH_ENV" > /dev/null
+ssh-add -K &>/dev/null
+if [ "$?" == 2 ]; then
+  test -r ~/.ssh-agent && \
+    eval "$(<~/.ssh-agent)" >/dev/null
+
+  ssh-add -K &>/dev/null
+  if [ "$?" == 2 ]; then
+    (umask 066; ssh-agent > ~/.ssh-agent)
+    eval "$(<~/.ssh-agent)" >/dev/null
     ssh-add -K
-}
-if [ -f "$SSH_ENV" ]; then
-    . "$SSH_ENV" > /dev/null
-fi
-if [ -n "$SSH_AGENT_PID" ]; then
-    ps ${SSH_AGENT_PID} > /dev/null
-    if [ $? -ne 0 ]; then
-        start_agent
-    fi
-else
-    start_agent
+  fi
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
