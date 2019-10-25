@@ -3,6 +3,9 @@ set background=dark
 colorscheme hybrid
 set mouse=a
 
+inoremap jj <ESC>
+set backspace=indent,eol,start
+
 set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
 set guifont=Monaco:h11
 let g:Powerline_symbols = 'fancy'
