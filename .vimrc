@@ -23,18 +23,14 @@ set go-=L
 " Disable fscking OSX bell
 autocmd! GUIEnter * set vb t_vb=
 
-" Auto-load .vimrc on change
-autocmd! bufwritepost .vimrc source %
-
 " Strip trailing whitespace from files on save
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Flake8 - Python linting
-autocmd BufWritePost *.py call Flake8()
 let g:flake8_show_in_file=1
 let g:flake8_show_in_gutter=0
 let g:flake8_show_quickfix=0
-nmap 8 <Plug>window:quickfix:toggle
+nmap 8 :call Flake8()<CR> <Plug>window:quickfix:toggle
 
 " Disable "safe write" to ensure webpack file watching works
 set backupcopy=yes
