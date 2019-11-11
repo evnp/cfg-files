@@ -52574,7 +52574,7 @@
 	<key>NSWindow Frame com.apple.typography_panel_FiraCodeonum,ss01,ss02,ss03,ss04,zero-Light</key>
 	<string>246 178 260 381 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 900 </string>
+	<string>155 93 650 454 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -53181,7 +53181,7 @@
 			<key>Shortcut</key>
 			<string></string>
 			<key>Show Status Bar</key>
-			<true/>
+			<false/>
 			<key>Silence Bell</key>
 			<true/>
 			<key>Smart Cursor Color</key>
@@ -53466,7 +53466,7 @@
 			<key>Visual Bell</key>
 			<false/>
 			<key>Window Type</key>
-			<integer>0</integer>
+			<integer>12</integer>
 			<key>Working Directory</key>
 			<string>/Users/evanpurcer</string>
 		</dict>
@@ -54551,6 +54551,10 @@
 		<string>3.1.6beta5</string>
 		<string>3.3.6</string>
 	</array>
+	<key>NoSyncBFPRecents</key>
+	<array>
+		<string>Fira Code onum,ss01,ss02,ss03,ss04,zero</string>
+	</array>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
@@ -54565,7 +54569,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>066A1947-F8AF-4C96-B0C2-B7ACDB2CDD5E</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>2</integer>
+	<integer>3</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>

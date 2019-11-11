@@ -5,6 +5,9 @@ set mouse=a
 
 inoremap jj <ESC>
 set backspace=indent,eol,start
+if getline(1) =~ '^{'
+	set ft=json
+endif
 
 set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
 set guifont=Monaco:h11
@@ -142,6 +145,7 @@ call plug#begin('~/.vim/vim-plug')
 Plug 'ConradIrwin/vim-bracketed-paste'  " paste without messing up indentation
 Plug 'Quramy/tsuquyomi'                 " typescript integration
 Plug 'airblade/vim-rooter'              " auto-set cwd to root of project (via heuristic, e.g. where is .git dir) useful for FZF
+Plug 'elzr/vim-json'										" json syntax highlighting
 Plug 'avakhov/vim-yaml'                 " yaml syntax highlighting
 Plug 'christoomey/vim-sort-motion'      " sort within a single line
 Plug 'christoomey/vim-tmux-navigator'   " navigate between tmux panes and vim splits using consistent hotkeys
