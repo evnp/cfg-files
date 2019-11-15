@@ -1,6 +1,6 @@
 syntax on
 set background=dark
-colorscheme hybrid
+colorscheme adventurous
 set mouse=a
 
 inoremap jj <ESC>
@@ -133,7 +133,6 @@ vnoremap <leader>p "_dP
 
 function! Focus()
   Goyo
-  colo seoul256-light
   highlight StatusLineNC ctermfg=white
   set scrolloff=999
 endfunction
