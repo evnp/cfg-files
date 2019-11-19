@@ -2,8 +2,13 @@ source ~/.aliases
 
 export PATH=$PATH:$HOME/bin # Add ~/bin to PATH for scripting
 export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
+export PATH=$PATH:$HOME/cfg-bin # Add ~/cfg-bin to PATH for scripting
 export PATH=$PATH:/opt/node/bin # Add Node to PATH
 export PATH=$PATH:/usr/local/mysql/bin # Add MySQL to PATH
+
+# Editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
 
 # Fix vim colors in Tmux
 export TERM="xterm-256color"
