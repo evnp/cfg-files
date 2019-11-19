@@ -33,7 +33,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 let g:flake8_show_in_file=1
 let g:flake8_show_in_gutter=0
 let g:flake8_show_quickfix=0
-nmap 8 :call Flake8()<CR> <Plug>window:quickfix:toggle
+nmap <F8> :call Flake8()<CR> <Plug>window:quickfix:toggle
 
 " Disable "safe write" to ensure webpack file watching works
 set backupcopy=yes
@@ -42,13 +42,13 @@ set backupcopy=yes
 set relativenumber
 set number
 
-" Tabs
 set list
 set listchars=tab:·\ ,trail:·,extends:>,precedes:<
 set shiftwidth=2
 set tabstop=2
 set softtabstop=2
 set autoindent
+set expandtab
 
 function! Spaces()
   set expandtab
@@ -131,12 +131,17 @@ vnoremap <leader>d "_d
 " without yanking it
 vnoremap <leader>p "_dP
 
+" Focus
 function! Focus()
   Goyo
   highlight StatusLineNC ctermfg=white
   set scrolloff=999
 endfunction
 command! Focus :call Focus()
+
+" PDB
+nnoremap pdb oimport pdb;pdb.set_trace()<esc>
+nnoremap PDB :%s/import pdb;pdb.set_trace()//g<cr>
 
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
