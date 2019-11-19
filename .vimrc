@@ -108,9 +108,10 @@ nnoremap L $
 nnoremap <F9> :vsp $MYGVIMRC<CR>
 
 " Autosave
-let g:auto_save = 1  " enable AutoSave on Vim startup
-let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
-let g:auto_save_silent = 1  " do not display the auto-save notification
+" let g:auto_save = 1  " enable AutoSave on Vim startup
+" let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+" let g:auto_save_silent = 1  " do not display the auto-save notification
+inoremap <Esc> <Esc>:w<CR>
 set noswapfile  " disable swp file creation since we're auto-saving
 set nobackup
 
@@ -140,8 +141,8 @@ endfunction
 command! Focus :call Focus()
 
 " PDB
-nnoremap pdb oimport pdb;pdb.set_trace()<esc>
-nnoremap PDB :%s/import pdb;pdb.set_trace()//g<cr>
+nnoremap <leader>pdb oimport pdb;pdb.set_trace()<esc>
+nnoremap <leader>PDB :g/import pdb;pdb.set_trace()/d<cr>
 
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
@@ -166,7 +167,7 @@ Plug 'leafgarland/typescript-vim'       " typescript syntax highlighting
 Plug 'mileszs/ack.vim'                  " ack integration
 Plug 'nvie/vim-flake8'                  " flake8 integration (python code linting)
 Plug 'tpope/vim-abolish'                " case-intelligent search/replace
-Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
+" Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
 Plug 'wavded/vim-stylus'                " stylus syntax highlighting
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
