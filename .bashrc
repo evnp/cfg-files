@@ -44,8 +44,12 @@ export BLACK="\[\033[0;38m\]"
 export NO_COLOUR="\[\033[0m\]"
 export RESET='\[\e[0m\]'
 
+# TODO Why doesn't this work on Ubuntu?
 # open man pages in vim
-export MANPAGER="col -b | vim -c 'set ft=man ts=8 nomod nolist nonu' -c 'nnoremap i <nop>' -c 'normal zR' -"
+#viman() {
+#  vim -c 'set ft=man ts=8 nomod nolist nonu' -c 'nnoremap i <nop>' -c 'normal zR' -
+#}
+#export MANPAGER="col -b | viman"
 
 # Prompt
 
@@ -74,18 +78,12 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # set completion-ignore-case on
 
 # Make sure ssh agent is always running
-ssh-add -K &>/dev/null
-if [ "$?" == 2 ]; then
-  test -r ~/.ssh-agent && \
-    eval "$(<~/.ssh-agent)" >/dev/null
-
-  ssh-add -K &>/dev/null
-  if [ "$?" == 2 ]; then
-    (umask 066; ssh-agent > ~/.ssh-agent)
-    eval "$(<~/.ssh-agent)" >/dev/null
-    ssh-add -K
-  fi
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  eval `ssh-agent`
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
 fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l > /dev/null || ssh-add
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/evnp/google-cloud-sdk/path.bash.inc' ]; then source '/home/evnp/google-cloud-sdk/path.bash.inc'; fi
