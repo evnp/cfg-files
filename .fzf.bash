@@ -63,20 +63,24 @@ _get_fzf_line() {
 
 # Open all files in cwd an a four-way split (or fewer splits if there are fewer files in dir)
 vimdir() {
-  shopt -s nullglob
-  local files=(*)
+  local files
+  IFS=$'\n' read -ra files -d ''
   local numfiles=${#files[@]}
   if [[ "$numfiles" == 0 ]]; then
     echo 'Directory is empty'
   elif [[ "$numfiles" == 1 ]]; then
-    vim *
+    xargs bash -c '</dev/tty vim "$@"' zero <<< "${files[@]}"
   elif [[ "$numfiles" == 2 ]]; then
-    vim * -c 'vsp|winc l|bn|winc h'
+    xargs bash -c '</dev/tty vim -c "vsp|winc l|bn|winc h" "$@"' zero <<< "${files[@]}"
   elif [[ "$numfiles" == 3 ]]; then
-    vim * -c 'vsp|bn|winc l|sp|winc j|bn|bn|winc h'
+    xargs bash -c '</dev/tty vim -c "vsp|bn|winc l|sp|winc j|bn|bn|winc h" "$@"' zero <<< "${files[@]}"
   else
-    vim * -c 'sp|vsp|bn|winc j|vsp|bn|bn|winc l|bn|bn|bn|winc h|winc k'
+    xargs bash -c '</dev/tty vim -c "sp|vsp|bn|winc j|vsp|bn|bn|winc l|bn|bn|bn|winc h|winc k" "$@"' zero <<< "${files[@]}"
   fi
+  # Note: "zero" string necessary in commands above; otherwise "$@" will expand inappropriately
+  # and chop off first file. "xargs bash -c '</dev/tty..." necessary to preserve shell tty
+  # instead of destroying it and losing normal shell interation.
+  # See: https://vi.stackexchange.com/a/17813/26128
 }
 
 # Run fzf and open file in default editor on enter
@@ -93,7 +97,7 @@ vimdir() {
 :FZFDir() {
   local out=$(_get_fzf_output "$1" "dirs")
   local dir=$(_get_fzf_target "$out")
-  [ -n "$dir" ] && cd "$dir" && vimdir
+  [ -n "$dir" ] && cd "$dir" && ls | vimdir
 }
 
 # Grep file contents and open file at matching line on enter

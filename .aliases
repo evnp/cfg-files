@@ -17,7 +17,7 @@ vs() {
 alias ak="fd -tf | ack -x"
 
 function replace {
-  ack -f | xargs sed -i '' "s/$1/$2/g"
+  ack -f | xargs sed -i "s/$1/$2/g"
 }
 
 function ireplace {
@@ -83,3 +83,25 @@ alias grc='git rebase --continue'
 alias gra='git rebase --abort'
 alias grh='git reset HEAD'
 alias gundo='git reset --soft HEAD~1 && git reset' # undo last commit and unstage changes
+
+alias la='ls -a'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Source alias
+alias src="source ~/.bash_profile"
+
+# how2 (cli stackoverflow) aliases
+alias hjs='how2 -l javascript'
+alias hpy='how2 -l python'
+alias hgit='how2 -l git'
+
+# Find files by content and open them in vim
+function vck {
+  ak --files-with-matches $1 | vimdir;
+}
+
+function b64 {
+  echo "$1" | base64 --decode;
+}
