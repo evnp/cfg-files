@@ -3,6 +3,8 @@
 source ~/.fzf.bash
 source ~/.aliases
 
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 # update iterm2 git metatdata while on remote machines
 function iterm2_print_user_vars() {
   it2git
