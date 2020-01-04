@@ -1,5 +1,8 @@
 source ~/.bashrc
-source ~/.bash_mixpanel
+
+if [[ -f '~/.bash_mixpanel' ]]; then
+  source ~/.bash_mixpanel
+fi
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/evanpurcer/google-cloud-sdk/path.bash.inc' ]; then . '/Users/evanpurcer/google-cloud-sdk/path.bash.inc'; fi

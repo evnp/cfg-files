@@ -35,7 +35,7 @@ export MANPAGER="col -b | vim -c 'set ft=man ts=8 nomod nolist nonu' -c 'nnorema
 PROMPT_COMMAND=prompt_command
 prompt_command() {
   local DOT_COLOR=$BLUE_BOLD
-  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  if [ -n "${SSH_CLIENT:-}" ] || [ -n "${SSH_TTY:-}" ]; then
     local DOT_COLOR=$RED_BOLD
   fi
   export PS1="\A${GREEN}\$(git_branch)${RESET} \W ${DOT_COLOR}●${RESET} "
