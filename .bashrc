@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
+source ~/.fzf.bash
 source ~/.aliases
+
+# update iterm2 git metatdata while on remote machines
+function iterm2_print_user_vars() {
+  it2git
+}
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 export PATH=$PATH:$HOME/bin # Add ~/bin to PATH for scripting
 export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
@@ -82,8 +90,3 @@ if [ -f '/home/evnp/google-cloud-sdk/path.bash.inc' ]; then source '/home/evnp/g
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/evnp/google-cloud-sdk/completion.bash.inc' ]; then source '/home/evnp/google-cloud-sdk/completion.bash.inc'; fi
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-[ -f ~/.aliases ] && source ~/.aliases
-
-export BASH_SILENCE_DEPRECATION_WARNING=1
