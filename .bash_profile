@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 source ~/.bashrc
 
 if [[ -f '~/.bash_mixpanel' ]]; then

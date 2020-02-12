@@ -33,7 +33,20 @@ autocmd BufWritePre * :%s/\s\+$//e
 let g:flake8_show_in_file=1
 let g:flake8_show_in_gutter=0
 let g:flake8_show_quickfix=0
-nmap <F8> :call Flake8()<CR> <Plug>window:quickfix:toggle
+nmap <leader>f :call Flake8()<CR> <Plug>window:quickfix:toggle<CR>
+nmap <leader>q :call ToggleQuickFix()<CR> :call plug#load('tsuquyomi')<CR> <Plug>window:quickfix:toggle<CR>
+let g:tsuquyomi_disable_quickfix = 0
+function! ToggleQuickFix()
+  let g:tsuquyomi_disable_quickfix = 1
+  "WIP tsuquyomi disable quickfix: why doesn't this work?
+  "unlet g:loaded_tsuquyomi
+  "if (g:tsuquyomi_disable_quickfix == 1)
+  "  let g:tsuquyomi_disable_quickfix = 0
+  "else
+  "  let g:tsuquyomi_disable_quickfix = 1
+  "endif
+endfunction
+
 
 " Disable "safe write" to ensure webpack file watching works
 set backupcopy=yes
@@ -41,6 +54,29 @@ set backupcopy=yes
 " Hybrid relative/absolute line-numbering "
 set relativenumber
 set number
+
+" function for entering 'display' mode with no line numbers, status bar, etc.
+" good for recording/screenshotting demos
+let s:hidden_all = 0
+function! ToggleHiddenAll()
+    if s:hidden_all  == 0
+        let s:hidden_all = 1
+        set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
+        set norelativenumber
+        set nonumber
+    else
+        let s:hidden_all = 0
+        set showmode
+        set ruler
+        set laststatus=2
+        set showcmd
+        set relativenumber
+        set number
+    endif
+endfunction
 
 set list
 set listchars=tab:·\ ,trail:·,extends:>,precedes:<
@@ -182,4 +218,13 @@ Plug 'tpope/vim-abolish'								" case-intelligent search/replace
 Plug 'wavded/vim-stylus'								" stylus syntax highlighting
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
+Plug 'dense-analysis/ale'
 call plug#end()
+
+" Ale syntax linting & autofixing
+let g:ale_fixers = {
+\   'python': ['black'],
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\}
+nnoremap <C-A> :ALEFix<CR>

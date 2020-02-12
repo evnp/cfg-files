@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+source ~/.aliases
+
 export PATH=$PATH:$HOME/bin # Add ~/bin to PATH for scripting
 export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
 export PATH=$PATH:$HOME/cfg-bin # Add ~/cfg-bin to PATH for scripting
