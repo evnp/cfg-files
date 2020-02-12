@@ -50,11 +50,8 @@ prompt_command() {
   if [ -n "${SSH_CLIENT:-}" ] || [ -n "${SSH_TTY:-}" ]; then
     local DOT_COLOR=$RED_BOLD
   fi
-  export PS1="\A${GREEN}\$(git_branch)${RESET} \W ${DOT_COLOR}●${RESET} "
+  export PS1=" ${PURPLE}\A ${YELLOW}\W ${DOT_COLOR}●${RESET} "
   echo -ne "\033]0;${PWD}\007"
-}
-git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
 }
 
 # History Management
