@@ -6,6 +6,11 @@ source ~/.aliases
 # update iterm2 git metatdata while on remote machines
 function iterm2_print_user_vars() {
   it2git
+  local pythonVersion="$( python --version 2>&1 )"
+  local pythonEnv="${VIRTUAL_ENV:-no active env}"
+  [[ "${pythonEnv}" =~ ^"$HOME"(/|$) ]] && pythonEnv="~${pythonEnv#$HOME}"
+  iterm2_set_user_var pythonVersion "${pythonVersion}"
+  iterm2_set_user_var pythonEnv "${pythonEnv}"
 }
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
