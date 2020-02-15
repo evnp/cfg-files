@@ -29,25 +29,6 @@ autocmd! GUIEnter * set vb t_vb=
 " Strip trailing whitespace from files on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-" Flake8 - Python linting
-let g:flake8_show_in_file=1
-let g:flake8_show_in_gutter=0
-let g:flake8_show_quickfix=0
-nmap <leader>f :call Flake8()<CR> <Plug>window:quickfix:toggle<CR>
-nmap <leader>q :call ToggleQuickFix()<CR> :call plug#load('tsuquyomi')<CR> <Plug>window:quickfix:toggle<CR>
-let g:tsuquyomi_disable_quickfix = 0
-function! ToggleQuickFix()
-  let g:tsuquyomi_disable_quickfix = 1
-  "WIP tsuquyomi disable quickfix: why doesn't this work?
-  "unlet g:loaded_tsuquyomi
-  "if (g:tsuquyomi_disable_quickfix == 1)
-  "  let g:tsuquyomi_disable_quickfix = 0
-  "else
-  "  let g:tsuquyomi_disable_quickfix = 1
-  "endif
-endfunction
-
-
 " Disable "safe write" to ensure webpack file watching works
 set backupcopy=yes
 
@@ -92,6 +73,7 @@ function! Spaces()
 endfunction
 command! Spaces :call Spaces()
 
+" TODO set Tabs on file open if file contains tabs
 function! Tabs()
 	set noexpandtab
 	%retab!
@@ -157,6 +139,9 @@ set foldlevelstart=2
 " suppress vim-go version warning
 let g:go_version_warning = 0
 
+" source vimrc
+command! S source $MYVIMRC
+
 " superquit
 command! Q wqa!
 
@@ -201,6 +186,7 @@ Plug 'elzr/vim-json'										" json syntax highlighting
 Plug 'avakhov/vim-yaml'									" yaml syntax highlighting
 Plug 'christoomey/vim-sort-motion'			" sort within a single line
 Plug 'christoomey/vim-tmux-navigator'		" navigate between tmux panes and vim splits using consistent hotkeys
+Plug 'dearrrfish/vim-applescript'
 Plug 'digitaltoad/vim-pug'							" pug/jade syntax highlighting
 Plug 'drmingdrmer/vim-toggle-quickfix'	" hotkey for quickfix window toggle
 Plug 'evnp/fodlgang'										" better folding
@@ -212,7 +198,6 @@ Plug 'junegunn/goyo.vim'								" focus-mode
 Plug 'junegunn/seoul256.vim'						" color scheme
 Plug 'leafgarland/typescript-vim'				" typescript syntax highlighting
 Plug 'mileszs/ack.vim'									" ack integration
-Plug 'nvie/vim-flake8'									" flake8 integration (python code linting)
 Plug 'tpope/vim-abolish'								" case-intelligent search/replace
 " Plug 'vim-scripts/vim-auto-save'				" write to disk immediately when a buffer is modified
 Plug 'wavded/vim-stylus'								" stylus syntax highlighting
@@ -222,9 +207,31 @@ Plug 'dense-analysis/ale'
 call plug#end()
 
 " Ale syntax linting & autofixing
+let g:ale_linters = {
+\   'python': [],
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\}
 let g:ale_fixers = {
 \   'python': ['black'],
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
 \}
 nnoremap <C-A> :ALEFix<CR>
+
+" lint and write
+nnoremap w :ALEFix<CR> :sleep 1<CR> :w<CR>
+
+" code linting
+nmap <leader>q :call ToggleQuickFix()<CR> :call plug#load('tsuquyomi')<CR> <Plug>window:quickfix:toggle<CR>
+let g:tsuquyomi_disable_quickfix = 0
+function! ToggleQuickFix()
+  let g:tsuquyomi_disable_quickfix = 1
+  "WIP tsuquyomi disable quickfix: why doesn't this work?
+  "unlet g:loaded_tsuquyomi
+  "if (g:tsuquyomi_disable_quickfix == 1)
+  "  let g:tsuquyomi_disable_quickfix = 0
+  "else
+  "  let g:tsuquyomi_disable_quickfix = 1
+  "endif
+endfunction

@@ -52326,6 +52326,8 @@
 	<true/>
 	<key>DisableFullscreenTransparency</key>
 	<false/>
+	<key>EnableAPIServer</key>
+	<true/>
 	<key>EnableRendezvous</key>
 	<false/>
 	<key>FlashTabBarInFullscreen</key>
@@ -54301,6 +54303,8 @@
 								<real>+infinity</real>
 								<key>minwidth</key>
 								<real>0.0</real>
+								<key>path</key>
+								<string>path</string>
 							</dict>
 							<key>layout advanced configuration dictionary value</key>
 							<dict>
@@ -54715,7 +54719,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>A9FB3862-96EE-4EC5-B3CC-2783F22A6321</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>10</integer>
+	<integer>12</integer>
 	<key>NoSyncNeverPromptToChangeOption</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -55118,7 +55122,7 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentTab.currentSession.user.pythonEnv</string>
+				<string>currentTab.currentSession.user.gitDeletes</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -55150,7 +55154,7 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentTab.currentSession.user.pythonVersion</string>
+				<string>currentTab.currentSession.user.gitPushCount</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -55215,6 +55219,22 @@
 				<true/>
 				<key>name</key>
 				<string>currentTab.currentSession.name</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.user.pythonEnv</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.user.pythonVersion</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -55330,30 +55350,22 @@
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
-			<dict>
-				<key>isTerminal</key>
-				<true/>
-				<key>name</key>
-				<string>currentTab.currentSession.user.gitDeletes</string>
-				<key>nonterminalContext</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>isTerminal</key>
-				<true/>
-				<key>name</key>
-				<string>currentTab.currentSession.user.gitPushCount</string>
-				<key>nonterminalContext</key>
-				<integer>0</integer>
-			</dict>
 		</array>
 		<key>2</key>
 		<array>
 			<dict>
 				<key>isTerminal</key>
+				<false/>
+				<key>name</key>
+				<string>currentSession</string>
+				<key>nonterminalContext</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.user.gitDirty</string>
+				<string>currentSession</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -55361,7 +55373,7 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession.user.gitPushCount</string>
+				<string>currentSession.user.gitAdds</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -55481,6 +55493,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentSession.user.gitPullCount</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>id</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -55516,6 +55536,14 @@
 				<string>iterm2</string>
 				<key>nonterminalContext</key>
 				<integer>4</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentSession.user.gitPushCount</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
 			</dict>
 			<dict>
 				<key>isTerminal</key>
@@ -55559,17 +55587,9 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
-				<false/>
-				<key>name</key>
-				<string>currentSession</string>
-				<key>nonterminalContext</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
-				<string>currentSession</string>
+				<string>currentSession.user.gitDirty</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -55602,6 +55622,8 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NoSyncScriptNameForStatusBarComponent_com.iterm2.keyscore</key>
+	<string>/Users/evanpurcer/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/keyscore.py</string>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
 	<real>593567377.61124504</real>
 	<key>OnlyWhenMoreTabs</key>

@@ -17,11 +17,13 @@ vs() {
 alias ak="fd -tf | ack -x"
 
 function replace {
-  ack -f | xargs sed -i "s/$1/$2/g"
+  for filename in $( ack -f ); do
+    vim -c "%s/\v(\w)@<!$1(\w)@!/$2/g" -c "wq" "$filename";
+  done
 }
 
 function ireplace {
-  for filename in $(find . -type f -name "*"); do
+  for filename in $( ack -f ); do
     vim -c "%s/\v(\w)@<!$1(\w)@!/$2/gc" -c "wq" "$filename";
   done
 }
