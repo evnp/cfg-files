@@ -111,3 +111,6 @@ function vck {
 function b64 {
   echo "$1" | base64 --decode;
 }
+
+alias python="/usr/local/bin/python3.7"
+alias py="python -m ptpython"
