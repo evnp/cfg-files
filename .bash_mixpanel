@@ -121,6 +121,3 @@ fi
 source $HOME/analytics/.shellenv
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-alias watch='ls */**.py | entr'
-alias testw='export MP_ENV_TYPE=unit_test; watch'

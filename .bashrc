@@ -2,6 +2,7 @@
 
 source ~/.fzf.bash
 source ~/.aliases
+source ~/.bashrc_mixpanel
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
