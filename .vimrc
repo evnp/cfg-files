@@ -139,9 +139,6 @@ set foldlevelstart=2
 " suppress vim-go version warning
 let g:go_version_warning = 0
 
-" source vimrc
-command! S source $MYVIMRC
-
 " superquit
 command! Q wqa!
 
