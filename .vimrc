@@ -232,3 +232,5 @@ function! ToggleQuickFix()
   "  let g:tsuquyomi_disable_quickfix = 1
   "endif
 endfunction
+
+highlight LineNr ctermfg=234 ctermbg=black
