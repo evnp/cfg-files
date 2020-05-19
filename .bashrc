@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set +H # turn off !!-style history expansion (security risk)
+
+source ~/cryptopals/solutions.sh
+
 source ~/.fzf.bash
 source ~/.aliases
 
@@ -20,6 +24,7 @@ export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
 export PATH=$PATH:$HOME/cfg-bin # Add ~/cfg-bin to PATH for scripting
 export PATH=$PATH:/opt/node/bin # Add Node to PATH
 export PATH=$PATH:/usr/local/mysql/bin # Add MySQL to PATH
+export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 
 # Editor
 export VISUAL=vim

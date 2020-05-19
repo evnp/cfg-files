@@ -6,7 +6,7 @@ set mouse=a
 inoremap jj <ESC>
 set backspace=indent,eol,start
 if getline(1) =~ '^{'
-	set ft=json
+  set ft=json
 endif
 
 set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
@@ -40,23 +40,23 @@ set number
 " good for recording/screenshotting demos
 let s:hidden_all = 0
 function! ToggleHiddenAll()
-    if s:hidden_all  == 0
-        let s:hidden_all = 1
-        set noshowmode
-        set noruler
-        set laststatus=0
-        set noshowcmd
-        set norelativenumber
-        set nonumber
-    else
-        let s:hidden_all = 0
-        set showmode
-        set ruler
-        set laststatus=2
-        set showcmd
-        set relativenumber
-        set number
-    endif
+  if s:hidden_all  == 0
+    let s:hidden_all = 1
+    set noshowmode
+    set noruler
+    set laststatus=0
+    set noshowcmd
+    set norelativenumber
+    set nonumber
+  else
+    let s:hidden_all = 0
+    set showmode
+    set ruler
+    set laststatus=2
+    set showcmd
+    set relativenumber
+    set number
+  endif
 endfunction
 
 set list
@@ -68,17 +68,23 @@ set autoindent
 set expandtab
 
 function! Spaces()
-	set expandtab
-	%retab!
+  set expandtab
+  %retab!
 endfunction
 command! Spaces :call Spaces()
 
-" TODO set Tabs on file open if file contains tabs
 function! Tabs()
-	set noexpandtab
-	%retab!
+  set noexpandtab
+  %retab!
 endfunction
 command! Tabs :call Tabs()
+
+function! MaybeTabs()
+  if match(readfile(expand("%:p")), "\t") != -1
+    :call Tabs()
+  endif
+endfunction
+autocmd VimEnter * :call MaybeTabs()
 
 " Search
 set incsearch
@@ -87,9 +93,9 @@ set ignorecase
 set smartcase
 nnoremap \ :noh<CR>
 
-highlight FoldColumn	gui=bold		guifg=grey65		 guibg=Grey90
-highlight Folded			gui=italic	guifg=Black			 guibg=Grey90
-highlight LineNr			gui=NONE		guifg=grey60		 guibg=Grey90
+highlight FoldColumn  gui=bold    guifg=grey65     guibg=Grey90
+highlight Folded      gui=italic  guifg=Black      guibg=Grey90
+highlight LineNr      gui=NONE    guifg=grey60     guibg=Grey90
 
 " Split resizing
 nnoremap <C-G> <C-W>=
@@ -127,10 +133,10 @@ nnoremap <F9> :vsp $MYGVIMRC<CR>
 
 " Autosave
 " let g:auto_save = 1  " enable AutoSave on Vim startup
-" let g:auto_save_in_insert_mode = 0	" do not save while in insert mode
-" let g:auto_save_silent = 1	" do not display the auto-save notification
+" let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+" let g:auto_save_silent = 1  " do not display the auto-save notification
 inoremap <Esc> <Esc>:w<CR>
-set noswapfile	" disable swp file creation since we're auto-saving
+set noswapfile  " disable swp file creation since we're auto-saving
 set nobackup
 
 " Folding
@@ -152,9 +158,9 @@ vnoremap <leader>p "_dP
 
 " Focus
 function! Focus()
-	Goyo
-	highlight StatusLineNC ctermfg=white
-	set scrolloff=999
+  Goyo
+  highlight StatusLineNC ctermfg=white
+  set scrolloff=999
 endfunction
 command! Focus :call Focus()
 
@@ -169,35 +175,35 @@ let &t_EI .= "\<Esc>[?2004l"
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 function! XTermPasteBegin()
-	set pastetoggle=<Esc>[201~
-	set paste
-	return ""
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
 endfunction
 
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
 call plug#begin('~/.vim/vim-plug')
-Plug 'Quramy/tsuquyomi'									" typescript integration
-Plug 'airblade/vim-rooter'							" auto-set cwd to root of project (via heuristic, e.g. where is .git dir) useful for FZF
-Plug 'elzr/vim-json'										" json syntax highlighting
-Plug 'avakhov/vim-yaml'									" yaml syntax highlighting
-Plug 'christoomey/vim-sort-motion'			" sort within a single line
-Plug 'christoomey/vim-tmux-navigator'		" navigate between tmux panes and vim splits using consistent hotkeys
+Plug 'Quramy/tsuquyomi'                 " typescript integration
+Plug 'airblade/vim-rooter'              " auto-set cwd to root of project (via heuristic, e.g. where is .git dir) useful for FZF
+Plug 'elzr/vim-json'                    " json syntax highlighting
+Plug 'avakhov/vim-yaml'                 " yaml syntax highlighting
+Plug 'christoomey/vim-sort-motion'      " sort within a single line
+Plug 'christoomey/vim-tmux-navigator'   " navigate between tmux panes and vim splits using consistent hotkeys
 Plug 'dearrrfish/vim-applescript'
-Plug 'digitaltoad/vim-pug'							" pug/jade syntax highlighting
-Plug 'drmingdrmer/vim-toggle-quickfix'	" hotkey for quickfix window toggle
-Plug 'evnp/fodlgang'										" better folding
-Plug 'fatih/vim-go'											" go syntax highlighting
-Plug 'jelera/vim-javascript-syntax'			" better javascript syntax highligting
+Plug 'digitaltoad/vim-pug'              " pug/jade syntax highlighting
+Plug 'drmingdrmer/vim-toggle-quickfix'  " hotkey for quickfix window toggle
+Plug 'evnp/fodlgang'                    " better folding
+Plug 'fatih/vim-go'                     " go syntax highlighting
+Plug 'jelera/vim-javascript-syntax'     " better javascript syntax highligting
 Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'									" fzf integration
-Plug 'junegunn/goyo.vim'								" focus-mode
-Plug 'junegunn/seoul256.vim'						" color scheme
-Plug 'leafgarland/typescript-vim'				" typescript syntax highlighting
-Plug 'mileszs/ack.vim'									" ack integration
-Plug 'tpope/vim-abolish'								" case-intelligent search/replace
-" Plug 'vim-scripts/vim-auto-save'				" write to disk immediately when a buffer is modified
-Plug 'wavded/vim-stylus'								" stylus syntax highlighting
+Plug 'junegunn/fzf.vim'                 " fzf integration
+Plug 'junegunn/goyo.vim'                " focus-mode
+Plug 'junegunn/seoul256.vim'            " color scheme
+Plug 'leafgarland/typescript-vim'       " typescript syntax highlighting
+Plug 'mileszs/ack.vim'                  " ack integration
+Plug 'tpope/vim-abolish'                " case-intelligent search/replace
+" Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
+Plug 'wavded/vim-stylus'                " stylus syntax highlighting
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'dense-analysis/ale'
