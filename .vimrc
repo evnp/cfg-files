@@ -1,6 +1,6 @@
 syntax on
 set background=dark
-colorscheme adventurous
+colorscheme alduin
 set mouse=a
 
 inoremap jj <ESC>
@@ -112,12 +112,8 @@ nnoremap <C-B> :Buffers<CR>
 nnoremap <C-G> :Ag<CR>
 
 " Buffer switching
-nnoremap ] :bprev<CR>
-nnoremap [ :bnext<CR>
-
-" Tab switching
-nnoremap } :tabnext<CR>
-nnoremap { :tabprev<CR>
+nnoremap } :bprev<CR>
+nnoremap { :bnext<CR>
 
 "--------------
 
@@ -191,7 +187,6 @@ Plug 'christoomey/vim-sort-motion'      " sort within a single line
 Plug 'christoomey/vim-tmux-navigator'   " navigate between tmux panes and vim splits using consistent hotkeys
 Plug 'dearrrfish/vim-applescript'
 Plug 'digitaltoad/vim-pug'              " pug/jade syntax highlighting
-Plug 'drmingdrmer/vim-toggle-quickfix'  " hotkey for quickfix window toggle
 Plug 'evnp/fodlgang'                    " better folding
 Plug 'fatih/vim-go'                     " go syntax highlighting
 Plug 'jelera/vim-javascript-syntax'     " better javascript syntax highligting
@@ -204,9 +199,10 @@ Plug 'mileszs/ack.vim'                  " ack integration
 Plug 'tpope/vim-abolish'                " case-intelligent search/replace
 " Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
 Plug 'wavded/vim-stylus'                " stylus syntax highlighting
+Plug 'dense-analysis/ale'
+Plug 'rhysd/vim-grammarous'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
-Plug 'dense-analysis/ale'
 call plug#end()
 
 " Ale syntax linting & autofixing
@@ -225,18 +221,8 @@ nnoremap <C-A> :ALEFix<CR>
 " lint and write
 nnoremap w :ALEFix<CR> :sleep 1<CR> :w<CR>
 
-" code linting
-nmap <leader>q :call ToggleQuickFix()<CR> :call plug#load('tsuquyomi')<CR> <Plug>window:quickfix:toggle<CR>
-let g:tsuquyomi_disable_quickfix = 0
-function! ToggleQuickFix()
-  let g:tsuquyomi_disable_quickfix = 1
-  "WIP tsuquyomi disable quickfix: why doesn't this work?
-  "unlet g:loaded_tsuquyomi
-  "if (g:tsuquyomi_disable_quickfix == 1)
-  "  let g:tsuquyomi_disable_quickfix = 0
-  "else
-  "  let g:tsuquyomi_disable_quickfix = 1
-  "endif
-endfunction
-
-highlight LineNr ctermfg=234 ctermbg=black
+" spelling & grammar check
+nmap <leader>q :copen<CR>
+nmap <leader>s :set spell spelllang=en_us<CR>
+nmap <leader>g :GrammarousCheck<CR>
+nmap <leader>c :ccl<CR> :set nospell<CR>
