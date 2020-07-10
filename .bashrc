@@ -41,6 +41,7 @@ export RED="\[\033[0;31m\]"
 export RED_BOLD="\[\033[1;31m\]"
 export BLUE="\[\033[0;34m\]"
 export BLUE_BOLD="\[\033[1;34m\]"
+export ESC_BLUE_BOLD="\\[\\033[1;34m\\]"
 export CYAN='\[\e[0;36m\]'
 export PURPLE='\[\e[0;35m\]'
 export GREEN="\[\033[0;32m\]"
@@ -48,6 +49,7 @@ export YELLOW="\[\033[0;33m\]"
 export BLACK="\[\033[0;38m\]"
 export NO_COLOUR="\[\033[0m\]"
 export RESET='\[\e[0m\]'
+export ESC_RESET='\\[\\e[0m\\]'
 
 # open man pages in vim
 export MANPAGER="col -b | vim -c 'set ft=man ts=8 nomod nolist nonu' -c 'nnoremap i <nop>' -c 'normal zR' -"
@@ -56,12 +58,37 @@ export MANPAGER="col -b | vim -c 'set ft=man ts=8 nomod nolist nonu' -c 'nnorema
 
 PROMPT_COMMAND=prompt_command
 prompt_command() {
-  local DOT_COLOR=$BLUE_BOLD
+  local DOT_COLOR="${BLUE_BOLD}"
   if [ -n "${SSH_CLIENT:-}" ] || [ -n "${SSH_TTY:-}" ]; then
-    local DOT_COLOR=$RED_BOLD
+    local DOT_COLOR="${RED_BOLD}"
   fi
-  export PS1=" ${PURPLE}\A ${YELLOW}\W ${DOT_COLOR}●${RESET} "
-  echo -ne "\033]0;${PWD}\007"
+  local dir=""
+  local color="${YELLOW}"
+  local colors=()
+  dir="$( dirs +0 )"
+
+  if [[ "${dir}" =~ ~\/ ]]; then
+    dir="${dir#"~/"}"
+    dir="$( tr '[:upper:]' '[:lower:]' <<< "${dir}" )"
+    dir="$( sed -E 's/([a-z])[a-z]*/\1/g' <<< "${dir}" )"
+    dir="$( sed 's/\// /g' <<< "${dir}" )"
+    local lowercase="abcdefghijklmnopqrstuvwxyz"
+    #local smallcaps="ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ"
+    local smallcaps="αႦƈԃҽϝɠԋιʝƙʅɱɳσρϙɾʂƚυʋɯxყȥ"
+    local i=0
+    local lower=""
+    local small=""
+    for ((; i < ${#lowercase}; i++ )); do
+      lower="${lowercase:${i}:1}"
+      small="${smallcaps:${i}:1}"
+      dir="${dir//${lower}/${small}}"
+    done
+    # colorize different directory levels:
+    #colors=( "${CYAN}" "${PURPLE}" "${YELLOW}" )
+    #color="${colors[$(( ( ${#dir} / 2 ) % ${#colors[@]} ))]}"
+  fi
+
+  export PS1=" ${color}${dir} ${DOT_COLOR}●${RESET} "
 }
 
 # History Management
