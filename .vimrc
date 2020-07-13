@@ -80,9 +80,13 @@ endfunction
 command! Tabs :call Tabs()
 
 function! MaybeTabs()
-  if match(readfile(expand("%:p")), "\t") != -1
-    :call Tabs()
-  endif
+  try
+    if match(readfile(expand("%:p")), "\t") != -1
+      :call Tabs()
+    endif
+  catch
+    " pass
+  endtry
 endfunction
 autocmd VimEnter * :call MaybeTabs()
 
