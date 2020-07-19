@@ -3,15 +3,14 @@ set background=dark
 colorscheme alduin
 set mouse=a
 
-inoremap jj <ESC>
 set backspace=indent,eol,start
 if getline(1) =~ '^{'
-  set ft=json
+set ft=json
 endif
 
+let g:airline_powerline_fonts=1
 set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
 set guifont=Monaco:h11
-let g:Powerline_symbols = 'fancy'
 set encoding=utf-8
 set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
@@ -82,7 +81,7 @@ command! Tabs :call Tabs()
 function! MaybeTabs()
   try
     if match(readfile(expand("%:p")), "\t") != -1
-      :call Tabs()
+      set noexpandtab
     endif
   catch
     " pass
@@ -96,10 +95,6 @@ set hlsearch
 set ignorecase
 set smartcase
 nnoremap \ :noh<CR>
-
-highlight FoldColumn  gui=bold    guifg=grey65     guibg=Grey90
-highlight Folded      gui=italic  guifg=Black      guibg=Grey90
-highlight LineNr      gui=NONE    guifg=grey60     guibg=Grey90
 
 " Split resizing
 nnoremap <C-G> <C-W>=
@@ -132,15 +127,16 @@ nnoremap L $
 nnoremap <F9> :vsp $MYGVIMRC<CR>
 
 " Autosave
-" let g:auto_save = 1  " enable AutoSave on Vim startup
-" let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
-" let g:auto_save_silent = 1  " do not display the auto-save notification
+"let g:auto_save = 1  " enable AutoSave on Vim startup
+"let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+"let g:auto_save_silent = 1  " do not display the auto-save notification
 inoremap <Esc> <Esc>:w<CR>
 set noswapfile  " disable swp file creation since we're auto-saving
 set nobackup
+set hidden
 
 " Folding
-set foldlevelstart=2
+set foldlevelstart=8
 
 " suppress vim-go version warning
 let g:go_version_warning = 0
@@ -201,13 +197,21 @@ Plug 'junegunn/seoul256.vim'            " color scheme
 Plug 'leafgarland/typescript-vim'       " typescript syntax highlighting
 Plug 'mileszs/ack.vim'                  " ack integration
 Plug 'tpope/vim-abolish'                " case-intelligent search/replace
-" Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
+"Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
 Plug 'wavded/vim-stylus'                " stylus syntax highlighting
 Plug 'dense-analysis/ale'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'rhysd/vim-grammarous'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
 call plug#end()
+
+" spelling & grammar check
+nmap <leader>q :copen<CR>
+nmap <leader>s :set spell spelllang=en_us<CR>
+nmap <leader>g :GrammarousCheck<CR>
+nmap <leader>c :ccl<CR> :set nospell<CR>
 
 " Ale syntax linting & autofixing
 let g:ale_linters = {
@@ -220,13 +224,32 @@ let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
 \}
-nnoremap <C-A> :ALEFix<CR>
+nnoremap <leader>af :ALEFix<CR>
+nnoremap <leader>at :ALEToggle<CR>
+nnoremap <leader>aw :ALEFix<CR> :sleep 1<CR> :w<CR>
+set scl=no  " no warnings in gutter (use status line)
 
-" lint and write
-nnoremap w :ALEFix<CR> :sleep 1<CR> :w<CR>
-
-" spelling & grammar check
-nmap <leader>q :copen<CR>
-nmap <leader>s :set spell spelllang=en_us<CR>
-nmap <leader>g :GrammarousCheck<CR>
-nmap <leader>c :ccl<CR> :set nospell<CR>
+" Airline (status line)
+let g:airline#extensions#ale#enabled = 1
+let g:airline_theme='dark'
+let g:airline_section_y = ''
+let g:airline_mode_map = {
+    \ '__'     : '-',
+    \ 'c'      : 'C',
+    \ 'i'      : 'I',
+    \ 'ic'     : 'I',
+    \ 'ix'     : 'I',
+    \ 'n'      : 'N',
+    \ 'multi'  : 'M',
+    \ 'ni'     : 'N',
+    \ 'no'     : 'N',
+    \ 'R'      : 'R',
+    \ 'Rv'     : 'R',
+    \ 's'      : 'S',
+    \ 'S'      : 'S',
+    \ ''     : 'S',
+    \ 't'      : 'T',
+    \ 'v'      : 'V',
+    \ 'V'      : 'V',
+    \ ''     : 'V',
+    \ }
