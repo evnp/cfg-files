@@ -17,7 +17,10 @@ set fillchars+=stl:\ ,stlnc:\
 set term=xterm-256color
 set termencoding=utf-8
 
-" Hide Toolbar "
+" Homerow Escape
+inoremap jj <ESC>
+
+" Hide Toolbar
 set guioptions-=T
 set guioptions-=r
 set go-=L
