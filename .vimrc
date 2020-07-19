@@ -19,6 +19,15 @@ set termencoding=utf-8
 
 " Homerow Escape
 inoremap jj <ESC>
+" also: ctrl+a (remap key binding in iterm preferences: 'Send Hex Codes: 0x1B')
+
+" Hotkeys
+nnoremap <C-W> :w<CR>
+nnoremap <C-E> :w<CR>:Q<CR>
+nnoremap <C-G> :GG<CR>
+inoremap <C-W> <ESC>:w<CR>
+inoremap <C-E> <ESC>:w<CR>:Q<CR>
+inoremap <C-G> <ESC>:GG<CR>
 
 " Hide Toolbar
 set guioptions-=T
@@ -100,7 +109,6 @@ set smartcase
 nnoremap \ :noh<CR>
 
 " Split resizing
-nnoremap <C-G> <C-W>=
 nnoremap <C-O> <C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>>
 nnoremap <C-Y> <C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><<C-W><
 nnoremap <C-U> <C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+<C-W>+
