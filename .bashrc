@@ -89,6 +89,12 @@ prompt_command() {
     #color="${colors[$(( ( ${#dir} / 2 ) % ${#colors[@]} ))]}"
   fi
 
+  # display any TODO items found in new directory:
+  if [[ "${PREV_DIR:-}" != "$( pwd )" ]]; then
+    [[ -f TODO ]] && echo TODO: && cat TODO
+    export PREV_DIR="$( pwd )"
+  fi
+
   export PS1=" ${color}${dir} ${DOT_COLOR}●${RESET} "
 }
 

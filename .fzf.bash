@@ -25,7 +25,17 @@ _fzf_dirs="fd --type d --follow --exclude '.git' ."
 _fzf_text="ag --nobreak --noheading ."
 
 export FZF_DEFAULT_COMMAND=$_fzf_files
-export FZF_DEFAULT_OPTS="--height 40% --exit-0"
+export FZF_DEFAULT_OPTS=""
+FZF_DEFAULT_OPTS+=" --height 40%"
+FZF_DEFAULT_OPTS+=" --exit-0"
+FZF_DEFAULT_OPTS+=" --no-info"
+FZF_DEFAULT_OPTS+=" --bind=tab:down"
+FZF_DEFAULT_OPTS+=" --bind=shift-tab:up"
+FZF_DEFAULT_OPTS+=" --bind=left-click:accept"
+FZF_DEFAULT_OPTS+=" --pointer=·"
+FZF_DEFAULT_OPTS+=" --prompt='· '"
+FZF_DEFAULT_OPTS+=" --border=sharp"
+FZF_DEFAULT_OPTS+=" --color=border:#541388,pointer:#541388,prompt:#2de2e6,header:#2de2e6,fg:#541388,fg+:#f706cf,bg+:-1,hl:#2de2e6,hl+:#2de2e6"
 
 # Provided with "files"|"dirs"|"text", return corresponding command to
 # search file names, directory paths, or file text

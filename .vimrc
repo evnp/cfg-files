@@ -8,6 +8,10 @@ if getline(1) =~ '^{'
 set ft=json
 endif
 
+" Treat hyphen and dot -separated words as "text objects" for movements like iw
+set iskeyword+=-
+set iskeyword+=.
+
 let g:airline_powerline_fonts=1
 set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
 set guifont=Monaco:h11
@@ -19,15 +23,19 @@ set termencoding=utf-8
 
 " Homerow Escape
 inoremap jj <ESC>
-" also: ctrl+a (remap key binding in iterm preferences: 'Send Hex Codes: 0x1B')
+inoremap uu <ESC>u
+inoremap ww <ESC>:w<CR>
+inoremap qq <ESC>:w<CR>:Q<CR>
+inoremap ;; <ESC>:
 
-" Hotkeys
+" CTRL Hotkeys
 nnoremap <C-W> :w<CR>
 nnoremap <C-E> :w<CR>:Q<CR>
 nnoremap <C-G> :GG<CR>
 inoremap <C-W> <ESC>:w<CR>
 inoremap <C-E> <ESC>:w<CR>:Q<CR>
 inoremap <C-G> <ESC>:GG<CR>
+" also: ctrl+a -> ESC (remap key binding in iterm preferences: 'Send Hex Codes: 0x1B')
 
 " Hide Toolbar
 set guioptions-=T
@@ -208,6 +216,7 @@ Plug 'junegunn/seoul256.vim'            " color scheme
 Plug 'leafgarland/typescript-vim'       " typescript syntax highlighting
 Plug 'mileszs/ack.vim'                  " ack integration
 Plug 'tpope/vim-abolish'                " case-intelligent search/replace
+Plug 'tpope/vim-surround'
 "Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
 Plug 'wavded/vim-stylus'                " stylus syntax highlighting
 Plug 'dense-analysis/ale'
