@@ -7,6 +7,8 @@ source ~/cryptopals/solutions.sh
 source ~/.fzf.bash
 source ~/.aliases
 
+source ~/gitorg/.gitorgrc
+
 # update iterm2 git metatdata while on remote machines
 function iterm2_print_user_vars() {
   it2git
@@ -91,7 +93,7 @@ prompt_command() {
 
   # display any TODO items found in new directory:
   if [[ "${PREV_DIR:-}" != "$( pwd )" ]]; then
-    [[ -f TODO ]] && echo TODO: && cat TODO
+    [[ -f TODO ]] && echo TODO: && cat -n TODO
     export PREV_DIR="$( pwd )"
   fi
 

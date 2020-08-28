@@ -24,6 +24,44 @@ _fzf_files="fd --type f"
 _fzf_dirs="fd --type d --follow --exclude '.git' ."
 _fzf_text="ag --nobreak --noheading ."
 
+function util-colorscheme() {
+	local bg="${1}"
+	local fg="${2}"
+	local em="${3}"
+	local hlbg="${4:-${em}}"
+	local hlfg="${5:-${hlbg}}"
+
+	local choices="fg"
+	local selection="fg+"
+	local choicesmatch="hl"
+	local selectionmatch="hl+"
+
+	echo "bg+:-1,border:${bg},pointer:${fg},prompt:${em},${choices}:${bg},${selection}:${fg},${choicesmatch}:${hlbg},${selectionmatch}:${hlfg}"
+}
+
+function util-random-colorscheme() {
+	local cyan="#0bc7e3"
+	local magenta="#ff00ff"
+	local yellow="#feaf3c"
+	local blue="#0000ff"
+	local teal="#1d485f"
+	local orange="#db662d"
+	local pinkorange="#ef2b63"
+	local purple="#541388"
+
+	local cssubmariner="$( util-colorscheme "${teal}" "${cyan}" "${orange}" )"
+	local csoutrun="$( util-colorscheme "${purple}" "${pinkorange}" "${cyan}" )"
+	local cscmyk="$( util-colorscheme "${blue}" "${cyan}" "${yellow}" "${magenta}" )"
+
+	local schemes=(
+		"${cssubmariner}"
+		"${csoutrun}"
+		"${cscmyk}"
+	)
+
+	echo "${schemes[$(( RANDOM % ${#schemes[@]} ))]}"
+}
+
 export FZF_DEFAULT_COMMAND=$_fzf_files
 export FZF_DEFAULT_OPTS=""
 FZF_DEFAULT_OPTS+=" --height 40%"
@@ -35,7 +73,7 @@ FZF_DEFAULT_OPTS+=" --bind=left-click:accept"
 FZF_DEFAULT_OPTS+=" --pointer=·"
 FZF_DEFAULT_OPTS+=" --prompt='· '"
 FZF_DEFAULT_OPTS+=" --border=sharp"
-FZF_DEFAULT_OPTS+=" --color=border:#541388,pointer:#541388,prompt:#2de2e6,header:#2de2e6,fg:#541388,fg+:#f706cf,bg+:-1,hl:#2de2e6,hl+:#2de2e6"
+FZF_DEFAULT_OPTS+=" --color=$( util-random-colorscheme )"
 
 # Provided with "files"|"dirs"|"text", return corresponding command to
 # search file names, directory paths, or file text
