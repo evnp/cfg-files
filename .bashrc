@@ -93,11 +93,50 @@ prompt_command() {
 
   # display any TODO items found in new directory:
   if [[ "${PREV_DIR:-}" != "$( pwd )" ]]; then
-    [[ -f TODO ]] && echo TODO: && cat -n TODO
     export PREV_DIR="$( pwd )"
+    todo # list todos
   fi
 
   export PS1=" ${color}${dir} ${DOT_COLOR}●${RESET} "
+}
+
+# todo utility - create and display todos
+# Usage:
+#   $ todo         # list todos
+#   $ todo foo bar # create todo with message "foo bar"
+#   $ todo 4       # remove todo at line 4
+function todo() {
+  local message="${@}"
+
+  # remove todo by index:
+  if [[ "${message}" =~ ^[0-9]+$ ]]; then
+    for file in TODO*; do
+      if [[ -f "${file}" ]]; then
+        sed -i '' "${message}d" "${file}"
+      fi
+    done
+
+  # create todo (if message provided):
+  elif [[ -n "${message}" ]]; then
+    local todofile
+    for file in TODO*; do
+      if [[ -f "${file}" ]]; then
+        todofile="${file}"
+        break
+      fi
+    done
+    if ! [[ -f "${todofile}" ]]; then
+      todofile="TODO.md" # default to markdown file extension
+    fi
+    echo "${message}" >> "${todofile}"
+  fi
+
+  # list todos
+  for file in TODO*; do
+    if [[ -f "${file}" ]]; then
+      echo "${file}" && cat -n "${file}"
+    fi
+  done
 }
 
 # History Management
