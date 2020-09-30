@@ -3,7 +3,7 @@
 alias s='ssh dev'
 alias m='mosh dev'
 alias t='tmux new-session -AD -s'
-alias st='ssh -A dev -t tmux new-session -AD -s'
+alias st='ssh dev -t tmux new-session -AD -s'
 alias mt='mosh dev -- tmux new-session -AD -s'
 alias sync-insights='sudo lsyncd /etc/lsyncd/insights.conf.lua'
 alias sync-dashboard='sudo lsyncd /etc/lsyncd/dashboard.conf.lua'

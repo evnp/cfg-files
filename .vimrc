@@ -226,6 +226,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
+Plug 'gko/vim-coloresque'
 call plug#end()
 
 " spelling & grammar check
@@ -274,3 +275,8 @@ let g:airline_mode_map = {
     \ 'V'      : 'V',
     \ ''     : 'V',
     \ }
+
+let g:fzf_colors = {
+  \ 'bg': ['bg', 'Normal'],
+  \ 'bg+': ['bg', 'Normal'],
+  \ }

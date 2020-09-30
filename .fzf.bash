@@ -72,7 +72,7 @@ FZF_DEFAULT_OPTS+=" --bind=shift-tab:up"
 FZF_DEFAULT_OPTS+=" --bind=left-click:accept"
 FZF_DEFAULT_OPTS+=" --pointer=·"
 FZF_DEFAULT_OPTS+=" --prompt='· '"
-FZF_DEFAULT_OPTS+=" --border=sharp"
+FZF_DEFAULT_OPTS+=" --margin=1,2"
 FZF_DEFAULT_OPTS+=" --color=$( util-random-colorscheme )"
 
 # Provided with "files"|"dirs"|"text", return corresponding command to

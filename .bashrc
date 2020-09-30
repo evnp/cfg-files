@@ -7,7 +7,8 @@ source ~/cryptopals/solutions.sh
 source ~/.fzf.bash
 source ~/.aliases
 
-source ~/gitorg/.gitorgrc
+source ~/gitorg/.gitorg-rc
+source ~/gitorg/.gitorg-commands-rc
 
 # update iterm2 git metatdata while on remote machines
 function iterm2_print_user_vars() {
@@ -28,6 +29,7 @@ export PATH=$PATH:/opt/node/bin # Add Node to PATH
 export PATH=$PATH:/usr/local/mysql/bin # Add MySQL to PATH
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 export PATH=$PATH:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/gitorg/bin
 
 # Editor
 export VISUAL=vim
