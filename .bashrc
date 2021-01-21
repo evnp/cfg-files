@@ -6,9 +6,11 @@ source ~/cryptopals/solutions.sh
 
 source ~/.fzf.bash
 source ~/.aliases
+source ~/.tools
+source ~/.gcloudrc
 
-source ~/gitorg/.gitorg-rc
-source ~/gitorg/.gitorg-commands-rc
+source ~/homerow-bash/shell/homerow
+source ~/homerow-bash/shell/shortcuts
 
 # update iterm2 git metatdata while on remote machines
 function iterm2_print_user_vars() {
@@ -30,6 +32,7 @@ export PATH=$PATH:/usr/local/mysql/bin # Add MySQL to PATH
 export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/gitorg/bin
+export PATH=$PATH:$HOME/.fzf/bin
 
 # Editor
 export VISUAL=vim
@@ -68,18 +71,19 @@ prompt_command() {
     local DOT_COLOR="${RED_BOLD}"
   fi
   local dir=""
-  local color="${YELLOW}"
+  local color="${BLUE}"
   local colors=()
   dir="$( dirs +0 )"
 
   if [[ "${dir}" =~ ~\/ ]]; then
     dir="${dir#"~/"}"
     dir="$( tr '[:upper:]' '[:lower:]' <<< "${dir}" )"
-    dir="$( sed -E 's/([a-z])[a-z]*/\1/g' <<< "${dir}" )"
+    #dir="$( sed -E 's/([a-z])[a-z]*/\1/g' <<< "${dir}" )"
     dir="$( sed 's/\// /g' <<< "${dir}" )"
     local lowercase="abcdefghijklmnopqrstuvwxyz"
+    local smallcaps="abcdefghijklmnopqrstuvwxyz"
     #local smallcaps="ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ"
-    local smallcaps="αႦƈԃҽϝɠԋιʝƙʅɱɳσρϙɾʂƚυʋɯxყȥ"
+    #local smallcaps="αႦƈԃҽϝɠԋιʝƙʅɱɳσρϙɾʂƚυʋɯxყȥ"
     local i=0
     local lower=""
     local small=""

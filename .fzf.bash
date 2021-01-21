@@ -1,16 +1,16 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+if [[ ! "$PATH" == */Users/evan/.fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/Users/evan/.fzf/bin"
 fi
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2> /dev/null
+[[ $- == *i* ]] && source "/Users/evan/.fzf/shell/completion.bash" 2> /dev/null
 
 # Key bindings
 # ------------
-source "/usr/local/opt/fzf/shell/key-bindings.bash"
+source "/Users/evan/.fzf/shell/key-bindings.bash"
 
 if ! hash fd 2>/dev/null; then
 	echo "You need to install fd: brew install fd"
@@ -65,8 +65,6 @@ function util-random-colorscheme() {
 export FZF_DEFAULT_COMMAND=$_fzf_files
 export FZF_DEFAULT_OPTS=""
 FZF_DEFAULT_OPTS+=" --height 40%"
-FZF_DEFAULT_OPTS+=" --exit-0"
-FZF_DEFAULT_OPTS+=" --no-info"
 FZF_DEFAULT_OPTS+=" --bind=tab:down"
 FZF_DEFAULT_OPTS+=" --bind=shift-tab:up"
 FZF_DEFAULT_OPTS+=" --bind=left-click:accept"

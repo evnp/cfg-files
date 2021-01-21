@@ -145,20 +145,8 @@ nnoremap K zk
 nnoremap L $
 nnoremap <F9> :vsp $MYGVIMRC<CR>
 
-" Autosave
-"let g:auto_save = 1  " enable AutoSave on Vim startup
-"let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
-"let g:auto_save_silent = 1  " do not display the auto-save notification
-inoremap <Esc> <Esc>:w<CR>
-set noswapfile  " disable swp file creation since we're auto-saving
-set nobackup
-set hidden
-
 " Folding
 set foldlevelstart=8
-
-" suppress vim-go version warning
-let g:go_version_warning = 0
 
 " superquit
 command! Q wqa!
@@ -171,13 +159,33 @@ vnoremap <leader>d "_d
 " without yanking it
 vnoremap <leader>p "_dP
 
+" Save on esc:
+inoremap <Esc> <Esc>:w<CR>
+set noswapfile  " disable swp file creation since we're auto-saving
+set nobackup
+set hidden
+
 " Focus
+let g:goyo_width=160
 function! Focus()
   Goyo
   highlight StatusLineNC ctermfg=white
   set scrolloff=999
+  set linebreak
+  autocmd TextChanged,TextChangedI <buffer> update
+  set spell spelllang=en_us
+endfunction
+function! MaybeFocus()
+  try
+    if &filetype ==# 'text' || &filetype ==# 'markdown' || &filetype ==# 'asciidoc'
+      call Focus()
+    endif
+  catch
+    " pass
+  endtry
 endfunction
 command! Focus :call Focus()
+autocmd VimEnter * :call MaybeFocus()
 
 " PDB
 nnoremap <leader>pdb oimport pdb;pdb.set_trace()<esc>
@@ -195,31 +203,30 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
+function! BuildYouCompleteMe(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
 call plug#begin('~/.vim/vim-plug')
-Plug 'Quramy/tsuquyomi'                 " typescript integration
+
 Plug 'airblade/vim-rooter'              " auto-set cwd to root of project (via heuristic, e.g. where is .git dir) useful for FZF
-Plug 'elzr/vim-json'                    " json syntax highlighting
-Plug 'avakhov/vim-yaml'                 " yaml syntax highlighting
 Plug 'christoomey/vim-sort-motion'      " sort within a single line
 Plug 'christoomey/vim-tmux-navigator'   " navigate between tmux panes and vim splits using consistent hotkeys
-Plug 'dearrrfish/vim-applescript'
-Plug 'digitaltoad/vim-pug'              " pug/jade syntax highlighting
 Plug 'evnp/fodlgang'                    " better folding
-Plug 'fatih/vim-go'                     " go syntax highlighting
-Plug 'jelera/vim-javascript-syntax'     " better javascript syntax highligting
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'                 " fzf integration
 Plug 'junegunn/goyo.vim'                " focus-mode
-Plug 'junegunn/seoul256.vim'            " color scheme
-Plug 'leafgarland/typescript-vim'       " typescript syntax highlighting
 Plug 'mileszs/ack.vim'                  " ack integration
 Plug 'tpope/vim-abolish'                " case-intelligent search/replace
 Plug 'tpope/vim-surround'
-"Plug 'vim-scripts/vim-auto-save'        " write to disk immediately when a buffer is modified
-Plug 'wavded/vim-stylus'                " stylus syntax highlighting
-Plug 'dense-analysis/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
@@ -227,25 +234,68 @@ Plug 'rhysd/vim-grammarous'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'gko/vim-coloresque'
+
+" syntax highlighting & language integration:
+Plug 'Quramy/tsuquyomi'
+Plug 'avakhov/vim-yaml'
+Plug 'cespare/vim-toml'
+Plug 'dagwieers/asciidoc-vim'
+Plug 'dearrrfish/vim-applescript'
+Plug 'dense-analysis/ale'
+Plug 'digitaltoad/vim-pug'
+Plug 'elzr/vim-json'
+Plug 'fatih/vim-go'
+Plug 'jelera/vim-javascript-syntax' " better javascript syntax highligting
+Plug 'leafgarland/typescript-vim'   " better typescript syntax highligting
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'rust-lang/rust.vim'
+Plug 'wavded/vim-stylus'
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYouCompleteMe') }
+
 call plug#end()
 
 " spelling & grammar check
+function! ToggleSpelling()
+  if &spell ==# 'nospell'
+    set spell spelllang=en_us
+  else
+    set nospell
+  endif
+endfunction
 nmap <leader>q :copen<CR>
-nmap <leader>s :set spell spelllang=en_us<CR>
+nmap <leader>s :call ToggleSpelling()<CR>
 nmap <leader>g :GrammarousCheck<CR>
 nmap <leader>c :ccl<CR> :set nospell<CR>
 
 " Ale syntax linting & autofixing
 let g:ale_linters = {
+\   'rust': ['rust-analyzer'],
 \   'python': [],
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
-\}
+\ }
 let g:ale_fixers = {
 \   'python': ['black'],
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
-\}
+\ }
+" let g:ale_rust_rls_config = {
+" 	\ 'rust': {
+" 		\ 'all_targets': 1,
+" 		\ 'build_on_save': 1,
+" 		\ 'clippy_preference': 'on',
+" 	\ },
+" \ }
+" let g:ale_rust_rls_toolchain = ''
+" let g:ale_rust_rls_executable = 'rust-analyzer'
+let g:ale_rust_analyzer_config = {
+      \ 'diagnostics': { 'disabled': ['unresolved-import'] },
+      \ 'cargo': { 'loadOutDirsFromCheck': v:true },
+      \ 'procMacro': { 'enable': v:true },
+      \ 'checkOnSave': { 'command': 'clippy', 'enable': v:true },
+\ }
+let g:rustfmt_autosave = 1
+
 nnoremap <leader>af :ALEFix<CR>
 nnoremap <leader>at :ALEToggle<CR>
 nnoremap <leader>aw :ALEFix<CR> :sleep 1<CR> :w<CR>
@@ -280,3 +330,14 @@ let g:fzf_colors = {
   \ 'bg': ['bg', 'Normal'],
   \ 'bg+': ['bg', 'Normal'],
   \ }
+
+
+let g:ycm_language_server =
+\ [
+\   {
+\     'name': 'rust',
+\     'cmdline': ['rust-analyzer'],
+\     'filetypes': ['rust'],
+\     'project_root_files': ['Cargo.toml']
+\   }
+\ ]

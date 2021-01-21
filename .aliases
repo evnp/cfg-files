@@ -1,5 +1,7 @@
 #!/bin/bash
 
+alias ls='exa --long --git'
+
 alias s='ssh dev'
 alias m='mosh dev'
 alias t='tmux new-session -AD -s'
@@ -7,36 +9,12 @@ alias st='ssh dev -t tmux new-session -AD -s'
 alias mt='mosh dev -- tmux new-session -AD -s'
 alias sync-insights='sudo lsyncd /etc/lsyncd/insights.conf.lua'
 alias sync-dashboard='sudo lsyncd /etc/lsyncd/dashboard.conf.lua'
-vs() {
-  local path=scp://dev//home/evnp${PWD/\/Users\/evanpurcer/}/$1
-  echo "Opening $path..."
-  vim $path
-}
 
 # make ack respect .gitignore (with better fd)
 alias ak="fd -tf | ack -x"
 
-function replace {
-  for filename in $( ack -f ); do
-    vim -c "%s/\v(\w)@<!$1(\w)@!/$2/g" -c "wq" "$filename";
-  done
-}
-
-function ireplace {
-  for filename in $( ack -f ); do
-    vim -c "%s/\v(\w)@<!$1(\w)@!/$2/gc" -c "wq" "$filename";
-  done
-}
-
-function deeptouch {
-  mkdir -p $(dirname "$1") && touch "$1"
-}
-
 alias clean-swp="find -name '*.sw*' | xargs rm"
 alias brew-skip-update="HOMEBREW_NO_AUTO_UPDATE=1 brew"
-gifify () {
-  ffmpeg -i $1 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=8 > $2
-}
 
 # Git aliases
 alias gs='git status'
@@ -105,14 +83,5 @@ alias hjs='how2 -l javascript'
 alias hpy='how2 -l python'
 alias hgit='how2 -l git'
 
-# Find files by content and open them in vim
-function vck {
-  ak --files-with-matches $1 | vimdir;
-}
-
-function b64 {
-  echo "$1" | base64 --decode;
-}
-
-alias python="/usr/local/bin/python3.7"
+alias python="/usr/local/bin/python3.9"
 alias py="python -m ptpython"
