@@ -1,6 +1,6 @@
 #!/bin/bash
 
-alias ls='exa --long --git'
+# alias ls='exa --long --git'
 
 alias s='ssh dev'
 alias m='mosh dev'

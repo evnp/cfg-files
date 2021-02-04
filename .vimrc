@@ -165,14 +165,13 @@ set noswapfile  " disable swp file creation since we're auto-saving
 set nobackup
 set hidden
 
-" Focus
+" Focus Mode
 let g:goyo_width=160
 function! Focus()
   Goyo
   highlight StatusLineNC ctermfg=white
-  set scrolloff=999
   set linebreak
-  autocmd TextChanged,TextChangedI <buffer> update
+  autocmd TextChangedI <buffer> update
   set spell spelllang=en_us
 endfunction
 function! MaybeFocus()
@@ -186,6 +185,16 @@ function! MaybeFocus()
 endfunction
 command! Focus :call Focus()
 autocmd VimEnter * :call MaybeFocus()
+
+" Typewriter Mode (cursor fixed to middle of screen, document scrolls automatically)
+function! Typewriter()
+  if &scrolloff == 0
+    set scrolloff=999
+  else
+    set scrolloff=0
+  endif
+endfunction
+command! Typewriter :call Typewriter()
 
 " PDB
 nnoremap <leader>pdb oimport pdb;pdb.set_trace()<esc>
@@ -236,7 +245,9 @@ Plug 'xolox/vim-colorscheme-switcher'
 Plug 'gko/vim-coloresque'
 
 " syntax highlighting & language integration:
+Plug 'posva/vim-vue'
 Plug 'Quramy/tsuquyomi'
+Plug 'Quramy/tsuquyomi-vue'
 Plug 'avakhov/vim-yaml'
 Plug 'cespare/vim-toml'
 Plug 'dagwieers/asciidoc-vim'
@@ -250,7 +261,8 @@ Plug 'leafgarland/typescript-vim'   " better typescript syntax highligting
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'rust-lang/rust.vim'
 Plug 'wavded/vim-stylus'
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYouCompleteMe') }
+Plug 'Valloric/YouCompleteMe'
+", { 'do': function('BuildYouCompleteMe') }
 
 call plug#end()
 
@@ -268,23 +280,26 @@ nmap <leader>g :GrammarousCheck<CR>
 nmap <leader>c :ccl<CR> :set nospell<CR>
 
 " Ale syntax linting & autofixing
+let g:ale_linter_aliases = {'vue': 'typescript'}
 let g:ale_linters = {
 \   'rust': ['rust-analyzer'],
 \   'python': [],
 \   'javascript': ['prettier', 'eslint'],
-\   'typescript': ['prettier', 'eslint'],
+\   'typescript': ['tsserver', 'prettier', 'eslint'],
+\   'vue': ['tsserver', 'prettier', 'eslint']
 \ }
 let g:ale_fixers = {
 \   'python': ['black'],
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['prettier', 'eslint'],
+\   'vue': ['prettier', 'eslint'],
 \ }
 " let g:ale_rust_rls_config = {
-" 	\ 'rust': {
-" 		\ 'all_targets': 1,
-" 		\ 'build_on_save': 1,
-" 		\ 'clippy_preference': 'on',
-" 	\ },
+"   \ 'rust': {
+"     \ 'all_targets': 1,
+"     \ 'build_on_save': 1,
+"     \ 'clippy_preference': 'on',
+"   \ },
 " \ }
 " let g:ale_rust_rls_toolchain = ''
 " let g:ale_rust_rls_executable = 'rust-analyzer'
@@ -341,3 +356,6 @@ let g:ycm_language_server =
 \     'project_root_files': ['Cargo.toml']
 \   }
 \ ]
+
+" Homerow
+so ~/homerow-bash/vim/fzf.vim

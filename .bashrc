@@ -11,6 +11,7 @@ source ~/.gcloudrc
 
 source ~/homerow-bash/shell/homerow
 source ~/homerow-bash/shell/shortcuts
+source ~/homerow-bash/shell/shortcuts-vim
 
 # update iterm2 git metatdata while on remote machines
 function iterm2_print_user_vars() {
@@ -160,18 +161,18 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # set completion-ignore-case on
 
 # Make sure ssh agent is always running
-ssh-add -K &>/dev/null
-if [ "$?" == 2 ]; then
-  test -r ~/.ssh-agent && \
-    eval "$(<~/.ssh-agent)" >/dev/null
-
-  ssh-add -K &>/dev/null
-  if [ "$?" == 2 ]; then
-    (umask 066; ssh-agent > ~/.ssh-agent)
-    eval "$(<~/.ssh-agent)" >/dev/null
-    ssh-add -K
-  fi
-fi
+#ssh-add -K &>/dev/null
+#if [ "$?" == 2 ]; then
+#  test -r ~/.ssh-agent && \
+#    eval "$(<~/.ssh-agent)" >/dev/null
+#
+#  ssh-add -K &>/dev/null
+#  if [ "$?" == 2 ]; then
+#    (umask 066; ssh-agent > ~/.ssh-agent)
+#    eval "$(<~/.ssh-agent)" >/dev/null
+#    ssh-add -K
+#  fi
+#fi
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/evnp/google-cloud-sdk/path.bash.inc' ]; then source '/home/evnp/google-cloud-sdk/path.bash.inc'; fi
