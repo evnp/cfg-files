@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-set +H # turn off !!-style history expansion (security risk)
-
-source ~/cryptopals/solutions.sh
-
+source ~/.bash_aliases
 source ~/.fzf.bash
-source ~/.aliases
-source ~/.tools
-source ~/.gcloudrc
+
+set +H # turn off !!-style history expansion (security risk)
 
 source ~/homerow-bash/shell/homerow
 source ~/homerow-bash/shell/shortcuts
@@ -30,10 +26,12 @@ export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
 export PATH=$PATH:$HOME/cfg-bin # Add ~/cfg-bin to PATH for scripting
 export PATH=$PATH:/opt/node/bin # Add Node to PATH
 export PATH=$PATH:/usr/local/mysql/bin # Add MySQL to PATH
-export PATH=$PATH:$HOME/.gem/ruby/2.6.0/bin
+export PATH=/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/gitorg/bin
 export PATH=$PATH:$HOME/.fzf/bin
+export PATH=$PATH:$HOME/.pub-cache/bin # Dart packages
+export GOPATH=$HOME
 
 # Editor
 export VISUAL=vim
@@ -99,10 +97,10 @@ prompt_command() {
   fi
 
   # display any TODO items found in new directory:
-  if [[ "${PREV_DIR:-}" != "$( pwd )" ]]; then
-    export PREV_DIR="$( pwd )"
-    todo # list todos
-  fi
+  #if [[ "${PREV_DIR:-}" != "$( pwd )" ]]; then
+  #  export PREV_DIR="$( pwd )"
+  #  todo # list todos
+  #fi
 
   export PS1=" ${color}${dir} ${DOT_COLOR}●${RESET} "
 }
@@ -112,8 +110,20 @@ prompt_command() {
 #   $ todo         # list todos
 #   $ todo foo bar # create todo with message "foo bar"
 #   $ todo 4       # remove todo at line 4
-function todo() {
-  local message="${@}"
+function todo() (
+  local origdir
+  local message="$*"
+
+  # if no TODO file in current directory, nav up until we find one
+  origdir="$( pwd )"
+  while ! ls ./TODO* 1> /dev/null 2>&1; do
+    if [[ "$( pwd )" == "${HOME}" ]]; then
+      cd "${origdir}" || exit
+      break
+    else
+      cd ..
+    fi
+  done
 
   # remove todo by index:
   if [[ "${message}" =~ ^[0-9]+$ ]]; then
@@ -141,10 +151,15 @@ function todo() {
   # list todos
   for file in TODO*; do
     if [[ -f "${file}" ]]; then
-      echo "${file}" && cat -n "${file}"
+      echo "$( dirs +0 )/${file}"
+      if [[ -s "${file}" ]]; then
+        cat -n "${file}"
+      else
+        echo " All done, time for a 🍺"
+      fi
     fi
   done
-}
+)
 
 # History Management
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries

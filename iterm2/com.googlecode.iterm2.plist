@@ -52531,7 +52531,7 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/cfg/cfg-files/iterm2</string>
+	<string>/Applications</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{799, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
@@ -52547,14 +52547,14 @@
 		<string>0.000000, 0.000000, 224.000000, 258.000000, NO, NO</string>
 		<string>0.000000, 259.000000, 224.000000, 48.000000, NO, NO</string>
 	</array>
-	<key>NSTableView Columns v2 KeyBingingTable</key>
+	<key>NSTableView Columns v3 KeyBingingTable</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
 	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVVBcnJheYABrgsMEx4fICEiIyQqNDU2VSRu
 	dWxs0g0ODxJaTlMub2JqZWN0c1YkY2xhc3OiEBGAAoAKgA3TFA0OFRkdV05TLmtleXOj
 	FhcYgAOABIAFoxobHIAGgAeACIAJWklkZW50aWZpZXJVV2lkdGhWSGlkZGVuUTAjQGjA
 	AAAAAAAI0iUmJyhaJGNsYXNzbmFtZVgkY2xhc3Nlc1xOU0RpY3Rpb25hcnmiJylYTlNP
-	YmplY3TTFA0OKy8doxYXGIADgASABaMwMRyAC4AMgAiACVExI0B0oAAAAAAA0iUmNzhe
+	YmplY3TTFA0OKy8doxYXGIADgASABaMwMRyAC4AMgAiACVExI0B0oZ2yLQ5W0iUmNzhe
 	TlNNdXRhYmxlQXJyYXmjNzkpV05TQXJyYXkACAARABoAJAApADIANwBJAEwAUgBUAGMA
 	aQBuAHkAgACDAIUAhwCJAJAAmACcAJ4AoACiAKYAqACqAKwArgC5AL8AxgDIANEA0gDX
 	AOIA6wD4APsBBAELAQ8BEQETARUBGQEbAR0BHwEhASMBLAExAUABRAAAAAAAAAIBAAAA
@@ -52578,7 +52578,7 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>259 425 586 77 0 0 1440 877 </string>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>284 325 799 448 0 0 1440 877 </string>
+	<string>320 339 799 448 0 0 1440 900 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>223 390 924 485 0 0 1440 877 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
@@ -52594,7 +52594,7 @@
 	<key>NSWindow Frame com.apple.typography_panel_FiraCodeonum,ss01,ss02,ss03,ss04,zero-Light</key>
 	<string>246 178 260 381 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 900 0 0 1440 877 </string>
+	<string>0 0 1440 900 0 0 1440 875 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -53822,7 +53822,7 @@
 			<key>HotKey Window Animates</key>
 			<false/>
 			<key>HotKey Window AutoHides</key>
-			<false/>
+			<true/>
 			<key>HotKey Window Dock Click Action</key>
 			<integer>1</integer>
 			<key>HotKey Window Floats</key>
@@ -54780,17 +54780,24 @@
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
+	<key>NoSyncFrame_SessionsPreferences</key>
+	<dict>
+		<key>screenFrame</key>
+		<string>{{0, 0}, {1440, 900}}</string>
+		<key>topLeft</key>
+		<string>{417, 805}</string>
+	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1440, 900}}</string>
 		<key>topLeft</key>
-		<string>{372, 851}</string>
+		<string>{409, 713}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>066A1947-F8AF-4C96-B0C2-B7ACDB2CDD5E</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>30</integer>
+	<integer>39</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -54804,7 +54811,7 @@
 	<key>NoSyncPersistentRateLimitedUpdates</key>
 	<dict>
 		<key>CheckForUpdatedPythonRuntime</key>
-		<real>625420307.67745101</real>
+		<real>641879394.51284003</real>
 	</dict>
 	<key>NoSyncRecordedVariables</key>
 	<dict>
@@ -55580,16 +55587,16 @@
 	<string>/Users/evan/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch/keyscore.py</string>
 	<key>NoSyncSearchHistory2</key>
 	<array>
+		<string>I am an </string>
+		<string>awaiting</string>
+		<string>iuid</string>
+		<string>Hello</string>
+		<string>hello</string>
+		<string>exchange-row</string>
+		<string>import { dateFilter } from "vue-date-fns";iimport { dateFilter } from "vue-date-fns";</string>
+		<string>fail</string>
 		<string>/jjjj</string>
 		<string>argumennn</string>
-		<string>argumetn</string>
-		<string>mjjj</string>
-		<string>match</string>
-		<string>with</string>
-		<string>parentElement</string>
-		<string>parentNode</string>
-		<string>retention-viewer</string>
-		<string>retention_</string>
 	</array>
 	<key>NoSyncSuppressClipboardAccessDeniedWarning</key>
 	<true/>

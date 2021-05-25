@@ -7,13 +7,10 @@ alias m='mosh dev'
 alias t='tmux new-session -AD -s'
 alias st='ssh dev -t tmux new-session -AD -s'
 alias mt='mosh dev -- tmux new-session -AD -s'
-alias sync-insights='sudo lsyncd /etc/lsyncd/insights.conf.lua'
-alias sync-dashboard='sudo lsyncd /etc/lsyncd/dashboard.conf.lua'
 
 # make ack respect .gitignore (with better fd)
 alias ak="fd -tf | ack -x"
 
-alias clean-swp="find -name '*.sw*' | xargs rm"
 alias brew-skip-update="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 
 # Git aliases
@@ -85,3 +82,5 @@ alias hgit='how2 -l git'
 
 alias python="/usr/local/bin/python3.9"
 alias py="python -m ptpython"
+
+alias nps="TIPS=0 npm start"

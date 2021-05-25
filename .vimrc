@@ -4,9 +4,6 @@ colorscheme alduin
 set mouse=a
 
 set backspace=indent,eol,start
-if getline(1) =~ '^{'
-set ft=json
-endif
 
 " Treat hyphen and dot -separated words as "text objects" for movements like iw
 set iskeyword+=-
@@ -212,16 +209,6 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
-function! BuildYouCompleteMe(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py
-  endif
-endfunction
-
 " Plugins - https://github.com/junegunn/vim-plug
 set rtp+=~/.fzf " required for fzf.vim to work
 call plug#begin('~/.vim/vim-plug')
@@ -243,26 +230,22 @@ Plug 'rhysd/vim-grammarous'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'gko/vim-coloresque'
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocInstall coc-vetur coc-eslint' }
 
 " syntax highlighting & language integration:
 Plug 'posva/vim-vue'
-Plug 'Quramy/tsuquyomi'
-Plug 'Quramy/tsuquyomi-vue'
 Plug 'avakhov/vim-yaml'
 Plug 'cespare/vim-toml'
 Plug 'dagwieers/asciidoc-vim'
 Plug 'dearrrfish/vim-applescript'
 Plug 'dense-analysis/ale'
 Plug 'digitaltoad/vim-pug'
-Plug 'elzr/vim-json'
 Plug 'fatih/vim-go'
 Plug 'jelera/vim-javascript-syntax' " better javascript syntax highligting
 Plug 'leafgarland/typescript-vim'   " better typescript syntax highligting
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'rust-lang/rust.vim'
 Plug 'wavded/vim-stylus'
-Plug 'Valloric/YouCompleteMe'
-", { 'do': function('BuildYouCompleteMe') }
 
 call plug#end()
 
@@ -280,13 +263,12 @@ nmap <leader>g :GrammarousCheck<CR>
 nmap <leader>c :ccl<CR> :set nospell<CR>
 
 " Ale syntax linting & autofixing
-let g:ale_linter_aliases = {'vue': 'typescript'}
 let g:ale_linters = {
 \   'rust': ['rust-analyzer'],
 \   'python': [],
 \   'javascript': ['prettier', 'eslint'],
 \   'typescript': ['tsserver', 'prettier', 'eslint'],
-\   'vue': ['tsserver', 'prettier', 'eslint']
+\   'vue': ['prettier', 'eslint'],
 \ }
 let g:ale_fixers = {
 \   'python': ['black'],
@@ -294,6 +276,9 @@ let g:ale_fixers = {
 \   'typescript': ['prettier', 'eslint'],
 \   'vue': ['prettier', 'eslint'],
 \ }
+" let g:ale_pattern_options = {
+" \   '.*\.vue$': {'ale_enabled': 0},
+" \}
 " let g:ale_rust_rls_config = {
 "   \ 'rust': {
 "     \ 'all_targets': 1,
@@ -356,6 +341,34 @@ let g:ycm_language_server =
 \     'project_root_files': ['Cargo.toml']
 \   }
 \ ]
+
+" CoC / Auto-Completion
+let b:coc_suggest_disable = 1
+set updatetime=300
+" Don't pass messages to |ins-completion-menu|:
+set shortmess+=c
+set signcolumn=number
+" Use tab for trigger completion with characters ahead and navigate:
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
 
 " Homerow
 so ~/homerow-bash/vim/fzf.vim

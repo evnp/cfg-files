@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function main() {
+	local red
+	local blue
+	local yellow
+	local reset
+
+	red="$( tput setaf 1 )"
+	blue="$( tput setaf 4 )"
+	yellow="$( tput setaf 3 )"
+	reset="$( tput sgr0 )"
+
+	local protect
+	local current
+	local pushcmd
+	local bypassmsg
+	local bypasscmd
+
+	protect="${GIT_PROTECT_BRANCHES:-main,master}"
+	protect="$( printf '%s' "${protect}" | sed 's/,/|/g' )"
+	current="$( git rev-parse --abbrev-ref HEAD )" # get current branch name
+	pushcmd="$( ps -ocommand= -p $PPID )"
+
+	if [[ -z "${GIT_PROTECT_BYPASS:-}" && "${current}" =~ ^(${protect})$ ]]; then
+
+		# Do not allow ANY force push to protected branches:
+		if [[ "${pushcmd}" =~ force|delete|-f ]]; then
+			echo "${yellow}Push cancelled${reset} -- force-pushing ${blue}${current}${reset} branch not allowed."
+			bypassmsg="If you really want to force-push ${current}, run: "
+			bypasscmd="GIT_PROTECT_BYPASS=1 ${pushcmd}"
+			echo "${red}DANGER ZONE${reset} ${bypassmsg} ${red}DANGER ZONE${reset}"
+			echo "${red}DANGER ZONE${reset} ${yellow}${bypasscmd}${reset} ${red}DANGER ZONE${reset}"
+			exit 1 # push will not execute
+		fi
+
+		# Require explicit y confirmation before ANY push to protected branches:
+		echo "${yellow}Warning:${reset} You're about to push MAIN (master) branch, do you wish to proceed? [y|N]"
+
+		read -r choice < /dev/tty
+		[[ -n "${choice:-}" ]] && echo # formatting
+
+		if ! [[ "${choice:-}" =~ ^[yY][eE]?[sS]?$ ]]; then
+			echo "${yellow}Push cancelled.${reset}"
+			exit 1 # push will not execute
+		fi
+	fi
+
+	exit 0 # push will execute
+}
+
+main "$@"
