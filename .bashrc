@@ -3,11 +3,12 @@
 source ~/.bash_aliases
 source ~/.fzf.bash
 
-set +H # turn off !!-style history expansion (security risk)
-
 source ~/homerow-bash/shell/homerow
 source ~/homerow-bash/shell/shortcuts
-source ~/homerow-bash/shell/shortcuts-vim
+
+eval "$( /opt/homebrew/bin/brew shellenv )"
+
+set +H # turn off !!-style history expansion (security risk)
 
 # update iterm2 git metatdata while on remote machines
 function iterm2_print_user_vars() {
@@ -26,11 +27,10 @@ export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
 export PATH=$PATH:$HOME/cfg-bin # Add ~/cfg-bin to PATH for scripting
 export PATH=$PATH:/opt/node/bin # Add Node to PATH
 export PATH=$PATH:/usr/local/mysql/bin # Add MySQL to PATH
-export PATH=/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:$PATH
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/gitorg/bin
 export PATH=$PATH:$HOME/.fzf/bin
-export PATH=$PATH:$HOME/.pub-cache/bin # Dart packages
+export PATH=/opt/homebrew/opt/ruby@2.7/bin:$PATH
 export GOPATH=$HOME
 
 # Editor
@@ -194,3 +194,4 @@ if [ -f '/home/evnp/google-cloud-sdk/path.bash.inc' ]; then source '/home/evnp/g
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/evnp/google-cloud-sdk/completion.bash.inc' ]; then source '/home/evnp/google-cloud-sdk/completion.bash.inc'; fi
+. "$HOME/.cargo/env"

@@ -1,24 +1,16 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */Users/evan/.fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/Users/evan/.fzf/bin"
+if [[ ! "$PATH" == */opt/homebrew/Cellar/fzf/0.25.1/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/opt/homebrew/Cellar/fzf/0.25.1/bin"
 fi
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "/Users/evan/.fzf/shell/completion.bash" 2> /dev/null
+[[ $- == *i* ]] && source "/opt/homebrew/Cellar/fzf/0.25.1/shell/completion.bash" 2> /dev/null
 
 # Key bindings
 # ------------
-source "/Users/evan/.fzf/shell/key-bindings.bash"
-
-if ! hash fd 2>/dev/null; then
-	echo "You need to install fd: brew install fd"
-fi
-
-if ! hash ag 2>/dev/null; then
-	echo "You need to install ag: brew install the_silver_searcher"
-fi
+source "/opt/homebrew/Cellar/fzf/0.25.1/shell/key-bindings.bash"
 
 _fzf_files="fd --type f"
 _fzf_dirs="fd --type d --follow --exclude '.git' ."

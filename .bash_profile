@@ -9,3 +9,4 @@ if [ -f '/Users/evanpurcer/google-cloud-sdk/path.bash.inc' ]; then . '/Users/eva
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/evanpurcer/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/evanpurcer/google-cloud-sdk/completion.bash.inc'; fi
+. "$HOME/.cargo/env"

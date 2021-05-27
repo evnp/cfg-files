@@ -80,7 +80,7 @@ alias hjs='how2 -l javascript'
 alias hpy='how2 -l python'
 alias hgit='how2 -l git'
 
-alias python="/usr/local/bin/python3.9"
+alias python="/opt/homebrew/bin/python3"
 alias py="python -m ptpython"
 
 alias nps="TIPS=0 npm start"

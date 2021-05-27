@@ -111,7 +111,7 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-nnoremap \ :noh<CR>
+nnoremap C :noh<CR>
 
 " Split resizing
 nnoremap <C-O> <C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>><C-W>>
@@ -127,8 +127,8 @@ nnoremap <C-B> :Buffers<CR>
 nnoremap <C-G> :Ag<CR>
 
 " Buffer switching
-nnoremap } :bprev<CR>
-nnoremap { :bnext<CR>
+nnoremap [ :bprev<CR>
+nnoremap ] :bnext<CR>
 
 "--------------
 
@@ -168,8 +168,8 @@ function! Focus()
   Goyo
   highlight StatusLineNC ctermfg=white
   set linebreak
-  autocmd TextChangedI <buffer> update
-  set spell spelllang=en_us
+  autocmd TextChanged,TextChangedI <buffer> update
+  set cmdheight=2  " prevent 'Press ENTER to continue' prompt on undo
 endfunction
 function! MaybeFocus()
   try
@@ -231,6 +231,7 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'gko/vim-coloresque'
 Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocInstall coc-vetur coc-eslint' }
+Plug 'easymotion/vim-easymotion'
 
 " syntax highlighting & language integration:
 Plug 'posva/vim-vue'
@@ -249,6 +250,9 @@ Plug 'wavded/vim-stylus'
 
 call plug#end()
 
+" easymotion config:
+map <Leader> <Plug>(easymotion-prefix)
+
 " spelling & grammar check
 function! ToggleSpelling()
   if &spell ==# 'nospell'
@@ -257,10 +261,10 @@ function! ToggleSpelling()
     set nospell
   endif
 endfunction
-nmap <leader>q :copen<CR>
-nmap <leader>s :call ToggleSpelling()<CR>
-nmap <leader>g :GrammarousCheck<CR>
-nmap <leader>c :ccl<CR> :set nospell<CR>
+nmap <leader>Q :copen<CR>
+nmap <leader>S :call ToggleSpelling()<CR>
+nmap <leader>G :GrammarousCheck<CR>
+nmap <leader>C :ccl<CR> :set nospell<CR>
 
 " Ale syntax linting & autofixing
 let g:ale_linters = {
@@ -369,6 +373,3 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
-
-" Homerow
-so ~/homerow-bash/vim/fzf.vim
