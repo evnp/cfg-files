@@ -1,38 +1,33 @@
+" Core Hotkeys
+inoremap jj <ESC>:noh<CR>        " clear search highlighting on esc
+inoremap ww <ESC>:noh<CR>:w<CR>  " clear search highlighting on write
+inoremap qq <ESC>:wqa!<CR>
+nnoremap ww :noh<CR>:wa!<CR>     " clear search highlighting on write
+nnoremap qq :wqa!<CR>
+nnoremap [ :bprev<CR>
+nnoremap ] :bnext<CR>
+
+" Appearance
 syntax on
 set background=dark
 colorscheme alduin
-set mouse=a
+set fillchars+=vert:\ " remove pipe characters between split panes
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_inactive_collapse=0  " inactive status lines should look exactly the same as active, apart from color
+set guifont=Monaco:h11
+set encoding=utf-8
+set t_Co=256
+set term=xterm-256color
+set termencoding=utf-8
+set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
 
+set mouse=a
 set backspace=indent,eol,start
 
 " Treat hyphen and dot -separated words as "text objects" for movements like iw
 set iskeyword+=-
 set iskeyword+=.
-
-let g:airline_powerline_fonts=1
-set shortmess=a  " use abbrev. messaging to avoid some 'hit enter' prompts
-set guifont=Monaco:h11
-set encoding=utf-8
-set t_Co=256
-set fillchars+=stl:\ ,stlnc:\
-set term=xterm-256color
-set termencoding=utf-8
-
-" Homerow Escape
-inoremap jj <ESC>
-inoremap uu <ESC>u
-inoremap ww <ESC>:w<CR>
-inoremap qq <ESC>:w<CR>:Q<CR>
-inoremap ;; <ESC>:
-
-" CTRL Hotkeys
-nnoremap <C-W> :w<CR>
-nnoremap <C-E> :w<CR>:Q<CR>
-nnoremap <C-G> :GG<CR>
-inoremap <C-W> <ESC>:w<CR>
-inoremap <C-E> <ESC>:w<CR>:Q<CR>
-inoremap <C-G> <ESC>:GG<CR>
-" also: ctrl+a -> ESC (remap key binding in iterm preferences: 'Send Hex Codes: 0x1B')
 
 " Hide Toolbar
 set guioptions-=T
@@ -126,10 +121,6 @@ nnoremap <C-F> :Files<CR>
 nnoremap <C-B> :Buffers<CR>
 nnoremap <C-G> :Ag<CR>
 
-" Buffer switching
-nnoremap [ :bprev<CR>
-nnoremap ] :bnext<CR>
-
 "--------------
 
 inoremap <S-Backspace> <Backspace><Backspace>
@@ -144,9 +135,6 @@ nnoremap <F9> :vsp $MYGVIMRC<CR>
 
 " Folding
 set foldlevelstart=8
-
-" superquit
-command! Q wqa!
 
 " delete without yanking
 nnoremap <leader>d "_d

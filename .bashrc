@@ -2,6 +2,7 @@
 
 source ~/.bash_aliases
 source ~/.fzf.bash
+source ~/.cargo/env # rust
 
 source ~/homerow-bash/shell/homerow
 source ~/homerow-bash/shell/shortcuts
@@ -27,7 +28,6 @@ export PATH=$PATH:$HOME/.bin # Add ~/.bin to PATH for scripting
 export PATH=$PATH:$HOME/cfg-bin # Add ~/cfg-bin to PATH for scripting
 export PATH=$PATH:/opt/node/bin # Add Node to PATH
 export PATH=$PATH:/usr/local/mysql/bin # Add MySQL to PATH
-export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/gitorg/bin
 export PATH=$PATH:$HOME/.fzf/bin
 export PATH=/opt/homebrew/opt/ruby@2.7/bin:$PATH
@@ -188,10 +188,3 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 #    ssh-add -K
 #  fi
 #fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/evnp/google-cloud-sdk/path.bash.inc' ]; then source '/home/evnp/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/evnp/google-cloud-sdk/completion.bash.inc' ]; then source '/home/evnp/google-cloud-sdk/completion.bash.inc'; fi
-. "$HOME/.cargo/env"
