@@ -87,6 +87,6 @@ alias nps="TIPS=0 npm start"
 
 # eddy aliases:
 alias er="eddy --files ./main.rs ./lib.rs --target Cargo.toml --subdir src"
-alias ec="eddy --subdir src/components"
+alias ir="eddy --path interreader/frontend/"
 
 

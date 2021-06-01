@@ -218,7 +218,7 @@ Plug 'rhysd/vim-grammarous'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'
 Plug 'gko/vim-coloresque'
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocInstall coc-vetur coc-eslint' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocInstall coc-eslint coc-prettier coc-vetur coc-json' }
 Plug 'easymotion/vim-easymotion'
 
 " syntax highlighting & language integration:
@@ -335,7 +335,8 @@ let g:ycm_language_server =
 \ ]
 
 " CoC / Auto-Completion
-let b:coc_suggest_disable = 1
+" config source: https://github.com/neoclide/coc.nvim#example-vim-configuration"
+set hidden
 set updatetime=300
 " Don't pass messages to |ins-completion-menu|:
 set shortmess+=c
@@ -350,6 +351,8 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-@> coc#refresh()
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
